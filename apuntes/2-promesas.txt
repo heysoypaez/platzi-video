@@ -1,0 +1,18 @@
+Una promesa nos permite mandar una funcionar para que haga lo que deba hacer
+
+y que te avise si falla
+
+
+new Promise(function(response,error){
+	
+
+})
+
+.then(function() {
+	
+})
+
+.catch(function() {
+	
+})
+
