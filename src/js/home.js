@@ -14,7 +14,7 @@ const getUser = new Promise(function(todoChevere,seJodio) {
 	// llamar un api
 	setTimeout(function(){
 		//Luego de 3 segundos se ejecuta esto
-		todoChevere("Se acabó el tiempo");
+		todoChevere("GANE? No, llegue en 5 segundos");
 	}, 5000)
 
 })
@@ -25,7 +25,7 @@ const getUserAll = new Promise(function(todoChevere,seJodio) {
 	// llamar un api
 	setTimeout(function(){
 		//Luego de 3 segundos se ejecuta esto
-		todoChevere("Se acabó el tiempo");
+		todoChevere("GANE A LOS 3 SEGUNDOS");
 	}, 3000)
 
 
@@ -44,12 +44,14 @@ getUser
 	})
 
 	//Enviando varias promesas al mismo tiempo
-		Promise.all([
+		Promise.race([
 			getUser,
 			getUserAll,
 			getUserAll,
 			
 			])
+
+		//solo entramos al then de la promesa que se resuelva primero
 		.then(function(mensaje) {
 			console.log(mensaje)
 		})
