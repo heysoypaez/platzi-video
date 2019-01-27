@@ -1,7 +1,7 @@
 console.log('hola mundo!');
-const noCambia = "Leonidas";
+const nombreUsuario = "Daniel";
 
-let cambia = "@LeonidasEsteban"
+let usuario = "@heysoypaez"
 
 function cambiarNombre(nuevoNombre) {
   cambia = nuevoNombre

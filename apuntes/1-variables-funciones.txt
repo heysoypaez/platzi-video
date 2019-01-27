@@ -1,0 +1,22 @@
+#Ideas claves
+
+Javascript es asincrono
+
+AJAX nos permita traer datos de servidores externos
+Recordando lo bàsico
+
+Variables
+
+var = variable global
+let = variable local que cambia
+const = variable local que NO cambia, es decir una constante
+
+Funciones
+Capsulas de código
+
+function hazAlgo() { 
+return "Hice algo"
+ }
+#Acciones:
+
+Decidi que planteare mis apuntes y modificaciones del curso usando git, cada clase sera un commit clave que lo expresare con una etiqueta principal (1.0, 2.0, 3.0 )
