@@ -1,6 +1,4 @@
-Una promesa nos permite mandar una funcionar para que haga lo que deba hacer
-
-y que te avise si falla
+Una promesa nos permite manejar funciones asincronas
 
 
 new Promise(function(response,error){
@@ -15,4 +13,13 @@ new Promise(function(response,error){
 .catch(function() {
 	
 })
+
+
+//Notas de Leonidas Esteban
+
+dicho de forma más cotidiana, se va a mandar una función para ver si falla o se ejecuta con éxito.
+
+Al crear una Promesa debemos pasarle por argumento la función que vamos a ejecutar de forma asíncrona, dicha función va a recibir dos parámetros para evaluar si se ejecuto bien la función o si fallo.
+
+Nuestra promesa va a tener dos métodos para saber si todo salió bien o fallo. El método then se encarga cuando la promesa se cumplió exitosamente, mientras que el método catch se encarga cuando la promesa falla.
 
