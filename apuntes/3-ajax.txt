@@ -1,0 +1,13 @@
+Ideas claves
+============
+
+Código clave
+============
+
+jquery
+
+Aplicación
+==========
+ => Pedir datos a un servidor, un servicio a traves de API
+ => Hacer peticiones API con jquery y vanilla
+ => Si uso solo js veo directo en la  consola

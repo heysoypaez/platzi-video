@@ -78,7 +78,7 @@ const getUserAll = new Promise(function(todoChevere,error) {
 	])
 
 	.then(function(mensaje) {
-	console.log(mensaje)
+	//console.log(mensaje)
 	})
 
 
@@ -88,7 +88,7 @@ const getUserAll = new Promise(function(todoChevere,error) {
 getUser
 	.then( function (mensaje) {
 
-	console.log(`HEY ${mensaje}`)
+	//console.log(`HEY ${mensaje}`)
 
 	})
 
@@ -104,7 +104,7 @@ getUser
 
 	.then(function(mensaje) {
 
-	console.log(`Ya en serio ${mensaje}`)
+	//console.log(`Ya en serio ${mensaje}`)
 
 	})
 	
@@ -113,6 +113,67 @@ getUser
 	//Metodo de Promise cuando las cosas van mal
 	.catch( function(mensaje) {
 
-	console.error(mensaje)
+	//console.error(mensaje)
 
 	})
+
+
+/*LLAMADAS AJAX A API
+======================*/
+
+//parametros:  url , objeto
+$.ajax("https://randomuser.me/api/",{
+
+	methood: "GET", //GET traer datos, si entregas es POST
+	success: function(data) {
+		console.log(data)
+	},
+	error: function(error) {
+		console.log(error)
+	}
+})
+
+//Esto en realidad es un XMLHttpRequest
+
+/*param: url, settings
+fetch devuelve una promesa
+*/
+fetch("https://randomuser.me/api/")
+
+	.then( function(response){
+		// console.log(response)
+		return response.json()
+	})
+
+	.then( function(user){
+		console.log("user FETCH",user.results[0].name.first)
+	})
+
+	.catch( function() {
+		console.error("Señores, he fallado")
+	})
+//si no colocas settings la coloca por defecto
+
+//las promesas pueden devolver una promesa y asi sucesivamente
+
+
+
+
+//results es un array
+
+
+
+
+
+
+
+/*
+$.ajax({
+  url: 'https://randomuser.me/api/',
+  dataType: 'json',
+  success: function(data) {
+    console.log(data);
+  }
+});
+    
+*/
