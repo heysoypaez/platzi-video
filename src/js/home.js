@@ -154,15 +154,41 @@ fetch("https://randomuser.me/api/")
 	})
 //si no colocas settings la coloca por defecto
 
-//las promesas pueden devolver una promesa y asi sucesivamente
-
-
-
+//las promesas pueden devolver una promesa y asi sucesivament
 
 //results es un array
 
 
 
+const requestIronMan = "https://gateway.marvel.com:443/v1/public/characters?name=Iron%20Man&limit=10&apikey=8a51c58308bb4e6fb2b8532c7e7536d3"
+
+
+const settingsMarvel = {
+
+  method: 'POST', // or 'PUT'
+ // body: JSON.stringify(data), // data can be `string` or {object}!
+  headers:{
+    'Content-Type': 'application/json'
+  }
+
+}
+
+fetch(requestIronMan)
+
+	.then( function(response, settingsMarvel){
+		// console.log(response)
+		return response.json()
+	})
+
+	.then( function(user){
+		console.log("TED FETCH",user )
+	})
+
+	.catch( function() {
+		console.error("Señores, he fallado")
+	})
+
+	
 
 
 

@@ -10,4 +10,4 @@ Aplicación
 ==========
  => Pedir datos a un servidor, un servicio a traves de API
  => Hacer peticiones API con jquery y vanilla
- => Si uso solo js veo directo en la  consola
+ => Si uso solo js veo directo en la  consola del navegador
