@@ -78,7 +78,7 @@ const getUserAll = new Promise(function(todoChevere,error) {
 	])
 
 	.then(function(mensaje) {
-	//console.log(mensaje)
+	console.log(mensaje)
 	})
 
 
@@ -88,7 +88,7 @@ const getUserAll = new Promise(function(todoChevere,error) {
 getUser
 	.then( function (mensaje) {
 
-	//console.log(`HEY ${mensaje}`)
+	console.log(`HEY ${mensaje}`)
 
 	})
 
@@ -104,7 +104,7 @@ getUser
 
 	.then(function(mensaje) {
 
-	//console.log(`Ya en serio ${mensaje}`)
+	console.log(`Ya en serio ${mensaje}`)
 
 	})
 	
@@ -113,7 +113,7 @@ getUser
 	//Metodo de Promise cuando las cosas van mal
 	.catch( function(mensaje) {
 
-	//console.error(mensaje)
+	console.error(mensaje)
 
 	})
 
@@ -151,7 +151,7 @@ fetch("https://randomuser.me/api/")
 
 	.catch( function() {
 		console.error("Señores, he fallado")
-	})
+	});
 //si no colocas settings la coloca por defecto
 
 //las promesas pueden devolver una promesa y asi sucesivament
@@ -173,6 +173,7 @@ const settingsMarvel = {
 
 }
 
+
 fetch(requestIronMan)
 
 	.then( function(response, settingsMarvel){
@@ -186,9 +187,7 @@ fetch(requestIronMan)
 
 	.catch( function() {
 		console.error("Señores, he fallado")
-	})
-
-	
+	});	
 
 
 
@@ -202,4 +201,44 @@ $.ajax({
   }
 });
     
+*/
+
+(async function load() {
+	
+	//await
+
+	/*
+	animation
+	action
+	terror
+	*/
+
+	async function getData(url) {
+	//Espera a que esto se ejecute
+	const response = await fetch(url)
+	//como es una funcion asincrona no hace falta el .then
+
+	const movieRequest = await response.json() //respuesta del metodo json
+
+	return movieRequest;
+	}
+
+	const api = "https://yts.am/api/v2/list_movies.json"	
+
+	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
+	const actionList = await getData(`${api}?genre=action`)
+	const terrorList = await getData(`${api}?genre=terror`)
+	const animationList = await getData(`${api}?genre=animation`)
+
+
+	console.log("actionList", actionList);
+	console.log("terrorList", terrorList);
+	console.log("animationList", animationList);
+})() //esta funcion se autoejecuta
+
+
+//con funciones asincronas simplifico fetch
+
+/*URLs APIs
+https://yts.am/api
 */

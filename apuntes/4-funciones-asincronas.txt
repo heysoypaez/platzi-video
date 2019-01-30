@@ -1,0 +1,8 @@
+Preambulo
+Escribir codigo asincrono puede ser un pelo feo
+
+Ideas claves
+
+Codigo principal
+
+Funciones asincronas
