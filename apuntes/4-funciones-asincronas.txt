@@ -6,3 +6,8 @@ Ideas claves
 Codigo principal
 
 Funciones asincronas
+
+async function
+
+
+async es una palabra reservada para funciones asincronas

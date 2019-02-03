@@ -234,7 +234,7 @@ $.ajax({
 	console.log("actionList", actionList);
 	console.log("terrorList", terrorList);
 	console.log("animationList", animationList);
-})() //esta funcion se autoejecuta
+})() //esta funcion que se autoejecuta gracias a los ultimos parentesis
 
 
 //con funciones asincronas simplifico fetch
