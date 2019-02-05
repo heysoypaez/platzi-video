@@ -1,0 +1,25 @@
+Un selector es basicamente una forma de llamar, escoger, *seleccionar* un elemento del DOM 
+
+Puede ser una clase, un id, la misma etiqueta html
+
+Ejemplo:
+
+==
+<h1 id="titulo"> Hoy es un gran dia </h1>
+
+"h1"  funcionara como selector de la etiqueta
+"titulo" funcionara como selector a traves de id
+==
+
+¿Como seleccionamos, obtenemos elementos del dom a traves de seectores?
+
+getElementById("")
+getElementsByClassName("")
+getElementsByTagName("")
+
+querySelector("")
+querySelectorAll("")
+
+
+¿Para que sirve?
+Para modificar, eliminar, agregar contenido al dom a traves de javascript
