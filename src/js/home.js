@@ -25,16 +25,17 @@ function cambiarNombre(nuevoNombre) {
 }
 
 
-function videoItemTemplate(src , title) {
+function videoItemTemplate(imgSrc , title) {
+
 	return(
 		 `<div class="primaryPlaylist">
-            <h3 class="primaryPlaylist-topic">Para llorar</h3>
+            <h3 class="primaryPlaylist-topic">Está de locos</h3>
             <h2 class="primaryPlaylist-title">${title}</h2>
 
             <div class="primaryPlaylist-list" id="${title}">
               <div class="primaryPlaylistItem">
                 <div class="primaryPlaylistItem-image">
-                  <img src=${src}>
+                  <img src=${imgSrc}>
                 </div>
                 <h4 class="primaryPlaylistItem-title">
                   ${title}
@@ -83,7 +84,6 @@ const getUserAll = new Promise(function(todoChevere,error) {
 	error("Damas y caballeros... hubo un error")
 
 	}
-
 	
 })
 
@@ -238,11 +238,11 @@ fetch(requestIronMan)
 	const dramaList = await getData(`${api}?genre=drama`)
 	const animationList = await getData(`${api}?genre=animation`)
 
-/*
+
 	console.log("actionList", actionList);
 	console.log("dramaList", dramaList);
 	console.log("animationList", animationList);
-*/
+
 
 	/*SELECTORES
 	=============*/
@@ -255,7 +255,7 @@ fetch(requestIronMan)
 	const $modal = document.getElementById("modal")
 
 
-	const $mContainer = document.querySelector("#action")
+	const $actionContainer = document.querySelector("#action")
 	const $animationContainer = document.getElementById("animation")
 	const $dramaContainer = document.getElementById("drama")	
 
@@ -271,8 +271,16 @@ fetch(requestIronMan)
 
 	//Funcion para mostrar en consola las peliculas
 	actionList.data.movies.forEach( (movie) => {
-	const HTMLString = videoItemTemplate(movie);
-	console.log(HTMLString)
+	const HTMLString = videoItemTemplate(movie.medium_cover_image, movie.title);
+
+	const $html = document.implementation.createHTMLDocument();
+	//creando un documento html
+
+	$html.body.innerHTML = HTMLString;
+
+	
+	$actionContainer.append($html.body.children[0])
+	//Donde el hijo O es el elemento que creamos con videoItemTemplate()
 })
 
 
