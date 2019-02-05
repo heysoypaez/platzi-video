@@ -25,6 +25,29 @@ function cambiarNombre(nuevoNombre) {
 }
 
 
+function videoItemTemplate(src , title) {
+	return(
+		 `<div class="primaryPlaylist">
+            <h3 class="primaryPlaylist-topic">Para llorar</h3>
+            <h2 class="primaryPlaylist-title">${title}</h2>
+
+            <div class="primaryPlaylist-list" id="${title}">
+              <div class="primaryPlaylistItem">
+                <div class="primaryPlaylistItem-image">
+                  <img src=${src}>
+                </div>
+                <h4 class="primaryPlaylistItem-title">
+                  ${title}
+                </h4>
+              </div>
+            </div>
+
+          </div>`
+		)
+}
+
+
+
 /* DECLARACION DE PROMESAS
 =========================================================*/
 
@@ -119,7 +142,7 @@ getUser
 
 
 /*LLAMADAS AJAX A API
-======================*/
+==============================================================*/
 
 //parametros:  url , objeto
 $.ajax("https://randomuser.me/api/",{
@@ -189,55 +212,19 @@ fetch(requestIronMan)
 		console.error("Señores, he fallado")
 	});	
 
+/*=================================================*/
 
 
-
-
-function videoItemTemplate(src , title) {
-	return(
-		 `<div class="primaryPlaylist">
-            <h3 class="primaryPlaylist-topic">Para llorar</h3>
-            <h2 class="primaryPlaylist-title">Drama</h2>
-            <div class="primaryPlaylist-list" id="drama">
-              <div class="primaryPlaylistItem">
-                <div class="primaryPlaylistItem-image">
-                  <img src=${src}>
-                </div>
-                <h4 class="primaryPlaylistItem-title">
-                  ${title}
-                </h4>
-              </div>
-            </div>
-          </div>`
-		)
-}
-
-
-/*
-$.ajax({
-  url: 'https://randomuser.me/api/',
-  dataType: 'json',
-  success: function(data) {
-    console.log(data);
-  }
-});
-    
-*/
+/*DECLARACION DE FUNCIONES ASINCRONAS
+========================================*/
 
 (async function load() {
 	
-	//await
-
-	/*
-	animation
-	action
-	terror
-	*/
 
 	async function getData(url) {
+
 	//Espera a que esto se ejecute
-	const response = await fetch(url)
-	//como es una funcion asincrona no hace falta el .then
+	const response = await fetch(url) //como es una funcion asincrona no hace falta el .then
 
 	const movieRequest = await response.json() //respuesta del metodo json
 
@@ -248,52 +235,41 @@ $.ajax({
 
 	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
 	const actionList = await getData(`${api}?genre=action`)
-	const terrorList = await getData(`${api}?genre=terror`)
+	const dramaList = await getData(`${api}?genre=drama`)
 	const animationList = await getData(`${api}?genre=animation`)
 
-
+/*
 	console.log("actionList", actionList);
-	console.log("terrorList", terrorList);
+	console.log("dramaList", dramaList);
 	console.log("animationList", animationList);
+*/
 
 	/*SELECTORES
-	k=============*/
-
-	//llamando a los elementos home con jquery
-	//$("home")
+	=============*/
 
 	const $featuringContainer = document.querySelector("#featuring") 
 	const $form = document.querySelector("#form") 
 	const $home = document.querySelector("#home") 
 
-//El peso es una convención de que es un elemento del DOM
+	//El "$" es una convención para decir que es un elemento del DOM
 	const $modal = document.getElementById("modal")
 
 
 	const $mContainer = document.querySelector("#action")
 	const $animationContainer = document.getElementById("animation")
-	const $terrorContainer = document.getElementById("terror")	
+	const $dramaContainer = document.getElementById("drama")	
 
 	
-const $overlay = document.getElementById("overlay")
-const $hideModal = document.getElementById("hide-modal")
+	const $overlay = document.getElementById("overlay")
+	const $hideModal = document.getElementById("hide-modal")
 
-//para optimizar el codigo buscamos en modal
-const $modalImage =  $modal.querySelector("img")
-const $modalTitle =  $modal.querySelector("h1")
-const $modalDescription =  $modal.querySelector("p")
-
-
-
-/*
-queryselectorall	
-queryselector
-queryselectorall
-*/
-//nos permite seleccionar el primer elemento que coincida .algo ·algo algo
-//trae solo el primer elemento
+	//para optimizar el codigo buscamos en modal
+	const $modalImage =  $modal.querySelector("img")
+	const $modalTitle =  $modal.querySelector("h1")
+	const $modalDescription =  $modal.querySelector("p")
 
 
+	//Funcion para mostrar en consola las peliculas
 	actionList.data.movies.forEach( (movie) => {
 	const HTMLString = videoItemTemplate(movie);
 	console.log(HTMLString)
@@ -301,18 +277,5 @@ queryselectorall
 
 
 })() //esta funcion que se autoejecuta gracias a los ultimos parentesis
-
-
-//con funciones asincronas simplifico fetch
-
-/*URLs APIs
-https://yts.am/api
-*/
-
-
-
-//console.log(videoItemTemplate("src/images/covers/bitcoin.jpg","bitcoin") )
-        
-          //la comilla inversa acepta multilinea
 
 
