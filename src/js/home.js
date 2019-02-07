@@ -218,6 +218,9 @@ fetch(requestIronMan)
 /*DECLARACION DE FUNCIONES ASINCRONAS
 ========================================*/
 
+
+
+
 (async function load() {
 	
 
@@ -269,21 +272,68 @@ fetch(requestIronMan)
 	const $modalDescription =  $modal.querySelector("p")
 
 
+	//añadire un evento formulario
+	$form.addEventListener("submit", (evento) => {
+		console.log(evento)
+		debugger
+		evento.preventDefault();	
+	})
+
+	function createTemplate(HTMLString) {
+		
+		const $html = document.implementation.createHTMLDocument();
+		//creando un documento html
+
+		$html.body.innerHTML = HTMLString;
+
+		return $html.body.children[0];
+		//Donde el hijo O es el elemento que creamos con videoItemTemplate()
+	}
+
+
+	function addEventClick($element) {
+
+		$element.addEventListener("click", () => {
+			alert("Joder tio")
+		})
+	}
+
 	//Funcion para mostrar en consola las peliculas
-	actionList.data.movies.forEach( (movie) => {
-	const HTMLString = videoItemTemplate(movie.medium_cover_image, movie.title);
+	function renderMoviesList(movieList, $container) {
 
-	const $html = document.implementation.createHTMLDocument();
-	//creando un documento html
+		$container.children[0].remove(); //eliminando gif que carga
+		//remove elimina el elemento
 
-	$html.body.innerHTML = HTMLString;
 
-	
-	$actionContainer.append($html.body.children[0])
-	//Donde el hijo O es el elemento que creamos con videoItemTemplate()
-})
+		//Funcion para mostrar en consola las peliculas
+		movieList.data.movies.forEach( (movie) => {
 
+		
+		const HTMLString = videoItemTemplate(movie.medium_cover_image, movie.title)
+
+		const movieElement = createTemplate(HTMLString)
+
+		//Pasando elemento al DOM
+		$container.append(movieElement)
+
+		addEventClick(movieElement)
+		})
+	}
+
+
+	/*EJECUCION DE FUNCIONES
+	==========================*/
+	renderMoviesList(actionList , $actionContainer)
+	renderMoviesList(dramaList , $dramaContainer)
+	renderMoviesList(animationList , $animationContainer)
 
 })() //esta funcion que se autoejecuta gracias a los ultimos parentesis
+
+/* 
+¿Cuantos procesos independientes hay en mi programa?
+
+Es util convertir todo lo que puedas en una funcion de una forma reutilizable en otras partes de tu APP
+
+*/
 
 
