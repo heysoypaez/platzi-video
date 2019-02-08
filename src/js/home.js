@@ -274,8 +274,11 @@ fetch(requestIronMan)
 
 	//añadire un evento formulario
 	$form.addEventListener("submit", (evento) => {
+		
 		console.log(evento)
-		debugger
+	
+		$home.classList.toggle("search-active")
+
 		evento.preventDefault();	
 	})
 
@@ -291,10 +294,36 @@ fetch(requestIronMan)
 	}
 
 
+	function showModal() {
+
+		//quitar display none overlay
+		$overlay.classList.add("active")
+
+		//quitar translate de modal
+		$modal.style.animation = "modalIn .8s forwards" //Curso animancione sweb
+	//	$modal.style.transform = "translateY(0px)"
+
+	}
+
+	function hideModal() {
+		
+		//quitar translate de modal
+		$modal.style.animation = "modalOut .8s forwards" //Curso animancione sweb
+		//$modal.style.transform = "translateY(0px)"
+
+		//quitar display none overlay
+		setTimeout(()=>{
+		$overlay.classList.toggle('active');
+		},1000);
+
+	}
+
+	$hideModal.addEventListener("click" , hideModal )
+
 	function addEventClick($element) {
 
 		$element.addEventListener("click", () => {
-			alert("Joder tio")
+			showModal()
 		})
 	}
 
@@ -337,3 +366,11 @@ Es util convertir todo lo que puedas en una funcion de una forma reutilizable en
 */
 
 
+/*
+queremos ocultar el grid de pelicula encontrada por defefcto
+y queremos que se muestre solo cuando se hace una busqueda
+
+para mostrarlo o no usamos la clase search-active
+
+
+*/
