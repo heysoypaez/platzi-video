@@ -25,29 +25,6 @@ function cambiarNombre(nuevoNombre) {
 }
 
 
-function videoItemTemplate(imgSrc , title) {
-
-	return(
-		 `<div class="primaryPlaylist">
-            <h3 class="primaryPlaylist-topic">Está de locos</h3>
-            <h2 class="primaryPlaylist-title">${title}</h2>
-
-            <div class="primaryPlaylist-list" id="${title}">
-              <div class="primaryPlaylistItem">
-                <div class="primaryPlaylistItem-image">
-                  <img src=${imgSrc}>
-                </div>
-                <h4 class="primaryPlaylistItem-title">
-                  ${title}
-                </h4>
-              </div>
-            </div>
-
-          </div>`
-		)
-}
-
-
 
 /* DECLARACION DE PROMESAS
 =========================================================*/
@@ -216,14 +193,13 @@ fetch(requestIronMan)
 
 
 /*DECLARACION DE FUNCIONES ASINCRONAS
-========================================*/
-
-
-
+===========================================================================*/
 
 (async function load() {
 	
 
+	/*DECLARACION DE FUNCIONES ASINCRONAS
+	======================================*/
 	async function getData(url) {
 
 	//Espera a que esto se ejecute
@@ -234,6 +210,109 @@ fetch(requestIronMan)
 	return movieRequest;
 	}
 
+
+	/*DECLARACION DE FUNCIONES SINCRONAS
+	======================================*/
+
+
+	function videoItemTemplate(imgSrc , title) {
+
+		return(
+			 `<div class="primaryPlaylist">
+	            <h3 class="primaryPlaylist-topic">Está de locos</h3>
+	            <h2 class="primaryPlaylist-title">${title}</h2>
+
+	            <div class="primaryPlaylist-list" id="${title}">
+	              <div class="primaryPlaylistItem">
+	                <div class="primaryPlaylistItem-image">
+	                  <img src=${imgSrc}>
+	                </div>
+	                <h4 class="primaryPlaylistItem-title">
+	                  ${title}
+	                </h4>
+	              </div>
+	            </div>
+
+	          </div>`
+			)
+	}
+
+	function createTemplate(HTMLString) {
+		
+		const $html = document.implementation.createHTMLDocument();
+		//creando un documento html
+
+		$html.body.innerHTML = HTMLString;
+
+		return $html.body.children[0];
+		//Donde el hijo O es el elemento que creamos con videoItemTemplate()
+	}
+
+	function showModal() {
+
+		//quitar display none overlay
+		$overlay.classList.add("active")
+
+		//quitar translate de modal
+		$modal.style.animation = "modalIn .8s forwards" //Curso animancione sweb
+	//	$modal.style.transform = "translateY(0px)"
+	}
+
+	function hideModal() {
+		
+		//quitar translate de modal
+		$modal.style.animation = "modalOut .8s forwards" //Curso animancione sweb
+		//$modal.style.transform = "translateY(0px)"
+
+		//quitar display none overlay
+		setTimeout(()=>{
+		$overlay.classList.toggle('active');
+		},1000);
+	}
+
+	function renderMoviesList(movieList, $container) {
+
+		$container.children[0].remove(); //eliminando gif que carga
+		//remove elimina el elemento
+
+
+		//Funcion para mostrar en consola las peliculas
+		movieList.data.movies.forEach( (movie) => {
+
+		
+		const HTMLString = videoItemTemplate(movie.medium_cover_image, movie.title)
+
+		const movieElement = createTemplate(HTMLString)
+
+		//Pasando elemento al DOM
+		$container.append(movieElement)
+
+		addEventClick(movieElement)
+		})
+	}
+
+
+	function toggleSearchActive(evento) {
+		
+			console.log(evento)
+			$home.classList.toggle("search-active")
+			evento.preventDefault();	
+	}
+
+	function addEventClick($element) {
+
+		$element.addEventListener("click", () => {
+			showModal()
+		})
+	}
+
+
+	/*DECLARACIÓN DE VARIABLES
+	============================*/
+
+	/*API data
+	==================*/
+
 	const api = "https://yts.am/api/v2/list_movies.json"	
 
 	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
@@ -242,13 +321,8 @@ fetch(requestIronMan)
 	const animationList = await getData(`${api}?genre=animation`)
 
 
-	console.log("actionList", actionList);
-	console.log("dramaList", dramaList);
-	console.log("animationList", animationList);
-
-
 	/*SELECTORES
-	=============*/
+	===================*/
 
 	const $featuringContainer = document.querySelector("#featuring") 
 	const $form = document.querySelector("#form") 
@@ -272,86 +346,20 @@ fetch(requestIronMan)
 	const $modalDescription =  $modal.querySelector("p")
 
 
-	//añadire un evento formulario
-	$form.addEventListener("submit", (evento) => {
-		
-		console.log(evento)
-	
-		$home.classList.toggle("search-active")
-
-		evento.preventDefault();	
-	})
-
-	function createTemplate(HTMLString) {
-		
-		const $html = document.implementation.createHTMLDocument();
-		//creando un documento html
-
-		$html.body.innerHTML = HTMLString;
-
-		return $html.body.children[0];
-		//Donde el hijo O es el elemento que creamos con videoItemTemplate()
-	}
-
-
-	function showModal() {
-
-		//quitar display none overlay
-		$overlay.classList.add("active")
-
-		//quitar translate de modal
-		$modal.style.animation = "modalIn .8s forwards" //Curso animancione sweb
-	//	$modal.style.transform = "translateY(0px)"
-
-	}
-
-	function hideModal() {
-		
-		//quitar translate de modal
-		$modal.style.animation = "modalOut .8s forwards" //Curso animancione sweb
-		//$modal.style.transform = "translateY(0px)"
-
-		//quitar display none overlay
-		setTimeout(()=>{
-		$overlay.classList.toggle('active');
-		},1000);
-
-	}
-
-	$hideModal.addEventListener("click" , hideModal )
-
-	function addEventClick($element) {
-
-		$element.addEventListener("click", () => {
-			showModal()
-		})
-	}
-
-	//Funcion para mostrar en consola las peliculas
-	function renderMoviesList(movieList, $container) {
-
-		$container.children[0].remove(); //eliminando gif que carga
-		//remove elimina el elemento
-
-
-		//Funcion para mostrar en consola las peliculas
-		movieList.data.movies.forEach( (movie) => {
-
-		
-		const HTMLString = videoItemTemplate(movie.medium_cover_image, movie.title)
-
-		const movieElement = createTemplate(HTMLString)
-
-		//Pasando elemento al DOM
-		$container.append(movieElement)
-
-		addEventClick(movieElement)
-		})
-	}
-
-
-	/*EJECUCION DE FUNCIONES
+	/*ESCUCHADORES DE EVENTOS
 	==========================*/
+
+	$form.addEventListener("submit", toggleSearchActive) //añadire un evento formulario
+	$hideModal.addEventListener("click" , hideModal ) //evento modal (ficha de peli)
+
+
+	/*EJECUCION DE FUNCIONES 
+	================================*/
+
+	console.log("actionList", actionList);
+	console.log("dramaList", dramaList);
+	console.log("animationList", animationList);
+
 	renderMoviesList(actionList , $actionContainer)
 	renderMoviesList(dramaList , $dramaContainer)
 	renderMoviesList(animationList , $animationContainer)
