@@ -291,12 +291,40 @@ fetch(requestIronMan)
 		})
 	}
 
+	function setAttributes($element, attributes, $innerHTML) {
+		// body...+
+
+		for(const attribute in attributes) {
+
+			$element.setAttribute(attribute, attributes[attribute])
+		}
+
+		$element.innerHTML = $innerHTML
+	}
 
 	function toggleSearchActive(evento) {
-		
+			
+			evento.preventDefault();		
 			console.log(evento)
 			$home.classList.toggle("search-active")
-			evento.preventDefault();	
+
+			const $loader = document.createElement("IMG")
+			const $copyText = document.createElement("P")
+
+			setAttributes($loader, {
+				src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emoji_u1f60f.svg/128px-Emoji_u1f60f.svg.png",
+				height: 30,
+				width: 30,
+			})
+
+			setAttributes($copyText, null, `${nombreUsuario}, Apuesto que esta es la  pelicula que buscas, ¿O no?` )
+
+
+	
+			$featuringContainer.append($copyText)	
+			$featuringContainer.append($loader)
+					
+				
 	}
 
 	function addEventClick($element) {
@@ -321,10 +349,10 @@ fetch(requestIronMan)
 	const animationList = await getData(`${api}?genre=animation`)
 
 
-	/*SELECTORES
+	/*Selectores HTML
 	===================*/
 
-	const $featuringContainer = document.querySelector("#featuring") 
+	const $featuringContainer = document.querySelector(".featuring") 
 	const $form = document.querySelector("#form") 
 	const $home = document.querySelector("#home") 
 
