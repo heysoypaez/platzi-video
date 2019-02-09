@@ -302,7 +302,7 @@ fetch(requestIronMan)
 		$element.innerHTML = $innerHTML
 	}
 
-	function toggleSearchActive(evento) {
+	async function toggleSearchActive(evento) {
 			
 			evento.preventDefault();		
 			console.log(evento)
@@ -321,10 +321,33 @@ fetch(requestIronMan)
 
 
 	
+			
+			//Creando un objeto FormData		
+			const data = new FormData($form);
+			const peli = await getData(`${BASE_API}?limit=1&query_term=${data.get("name")}`)
+			//Esto es una peticion GET
+
+		//	data.get("name");	
+		//debugger
+
+			const HTMLstring = movieFoundTemplate(peli.data.movies[0]);
+			$featuringContainer.innerHTML = HTMLstring;
+
+			debugger
+
 			$featuringContainer.append($copyText)	
 			$featuringContainer.append($loader)
-					
-				
+		
+	}
+
+	function movieFoundTemplate(peli) {
+		return (`<div class="featuring-image">
+          <img src="${peli.medium_cover_image}" width="70" height="100" alt="">
+        </div>
+        <div class="featuring-content">
+          <p class="featuring-title">Pelicula encontrada</p>
+          <p class="featuring-album">${peli.title}</p>
+        </div>`)
 	}
 
 	function addEventClick($element) {
@@ -341,12 +364,12 @@ fetch(requestIronMan)
 	/*API data
 	==================*/
 
-	const api = "https://yts.am/api/v2/list_movies.json"	
+	const BASE_API = "https://yts.am/api/v2/list_movies.json"	
 
 	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
-	const actionList = await getData(`${api}?genre=action`)
-	const dramaList = await getData(`${api}?genre=drama`)
-	const animationList = await getData(`${api}?genre=animation`)
+	const actionList = await getData(`${BASE_API}?genre=action`)
+	const dramaList = await getData(`${BASE_API}?genre=drama`)
+	const animationList = await getData(`${BASE_API}?genre=animation`)
 
 
 	/*Selectores HTML
@@ -402,11 +425,63 @@ Es util convertir todo lo que puedas en una funcion de una forma reutilizable en
 */
 
 
+
+
+/*PREGUNTAS CLAVES
+¿Como obtengo el dato del formulario? para realizar una peticion personanilzada
+
+Opciones:
+querySelector + value
+formData
+
+*/
+
+
+
+
 /*
 queremos ocultar el grid de pelicula encontrada por defefcto
 y queremos que se muestre solo cuando se hace una busqueda
 
 para mostrarlo o no usamos la clase search-active
 
+
+*/
+
+/*
+lista de preguntas para tomar accion
+¿Que me queda de este conocimiento?
+¿Como puedo utilizar esto?
+¿Cual es el primer paso para accionar?
+¿Que paso debo tomar ahora?
+
+*/
+
+
+/*
+¿Cómo aprendo al máximo y mejoro mi arte y mi vida a través de este curso?
+- Prestando la màxima atenciòn y elimando todas las distracciones a mi alrededor
+- Haciendome preguntas
+- Accionando lo que dice
+- Comprendiendo lo que accionando
+- Replicando por mi mismo lo que aprendi con proyectos y necesidades propias
+- Haciendome preguntas respecto a lo que dice
+- Dandole pausa
+- Si no entiendo, siguiendo y teniendo fe
+*/
+
+
+/*
+Conceptos claves de este curso
+
+
+setters y getters
+
+el primero asigna, el segundo toma
+el primero necesito una llave (key) y un valor
+el segundo solo la llave (key)
+
+Para poder usar setters y getters en objeto formData
+=> es necesario asignar antes el atributo html name
 
 */
