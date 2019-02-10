@@ -287,13 +287,13 @@ fetch(requestIronMan)
 		//Pasando elemento al DOM
 		$container.append(movieElement)
 
-		addEventClick(movieElement)
+		showModalOnClick(movieElement)
 		})
 	}
 
 	function setAttributes($element, attributes, $innerHTML) {
-		// body...+
-
+		
+		//loop for Setting attributes
 		for(const attribute in attributes) {
 
 			$element.setAttribute(attribute, attributes[attribute])
@@ -304,36 +304,38 @@ fetch(requestIronMan)
 
 	async function toggleSearchActive(evento) {
 			
+			/*INICIALIZACIÓN DE ARCHIVO
+			============================*/
 			evento.preventDefault();		
-			console.log(evento)
-			$home.classList.toggle("search-active")
+			
+			
+			/*DECLARACIÓN DE VARIABLES
+			===========================*/
+			const $loader = document.createElement("IMG");
+			const $copyText = document.createElement("P");
 
-			const $loader = document.createElement("IMG")
-			const $copyText = document.createElement("P")
-
-			setAttributes($loader, {
-				src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emoji_u1f60f.svg/128px-Emoji_u1f60f.svg.png",
-				height: 30,
-				width: 30,
-			})
-
-			setAttributes($copyText, null, `${nombreUsuario}, Apuesto que esta es la  pelicula que buscas, ¿O no?` )
-
-
-	
 			
 			//Creando un objeto FormData		
 			const data = new FormData($form);
 			const peli = await getData(`${BASE_API}?limit=1&query_term=${data.get("name")}`)
 			//Esto es una peticion GET
 
-		//	data.get("name");	
-		//debugger
+			/*data.get("name");	*/
 
 			const HTMLstring = movieFoundTemplate(peli.data.movies[0]);
 			$featuringContainer.innerHTML = HTMLstring;
 
-			debugger
+
+			/*EJECUCION FUNCIONES RENDER
+			=============================*/
+			$home.classList.toggle("search-active"); //on - off in this class
+
+			setAttributes($loader, {
+				src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emoji_u1f60f.svg/128px-Emoji_u1f60f.svg.png",
+				height: 30,
+				width: 30,
+			})
+			setAttributes($copyText, null, `${nombreUsuario}, Apuesto que esta es la  pelicula que buscas, ¿O no?` )
 
 			$featuringContainer.append($copyText)	
 			$featuringContainer.append($loader)
@@ -341,16 +343,20 @@ fetch(requestIronMan)
 	}
 
 	function movieFoundTemplate(peli) {
-		return (`<div class="featuring-image">
-          <img src="${peli.medium_cover_image}" width="70" height="100" alt="">
-        </div>
-        <div class="featuring-content">
-          <p class="featuring-title">Pelicula encontrada</p>
-          <p class="featuring-album">${peli.title}</p>
+		return (
+		`<div class="featuring">
+      		<div class="featuring-image">
+        		<img src="${peli.medium_cover_image}" width="70" height="100" alt="">
+        	</div>
+        	
+        	<div class="featuring-content">
+        		<p class="featuring-title">Pelicula encontrada</p>
+        		<p class="featuring-album">${peli.title}</p>
+        	</div>
         </div>`)
 	}
 
-	function addEventClick($element) {
+	function showModalOnClick($element) {
 
 		$element.addEventListener("click", () => {
 			showModal()
@@ -375,7 +381,8 @@ fetch(requestIronMan)
 	/*Selectores HTML
 	===================*/
 
-	const $featuringContainer = document.querySelector(".featuring") 
+	const $featuringContainer = document.querySelector("#featuring") 
+	
 	const $form = document.querySelector("#form") 
 	const $home = document.querySelector("#home") 
 
@@ -439,14 +446,6 @@ formData
 
 
 
-/*
-queremos ocultar el grid de pelicula encontrada por defefcto
-y queremos que se muestre solo cuando se hace una busqueda
-
-para mostrarlo o no usamos la clase search-active
-
-
-*/
 
 /*
 lista de preguntas para tomar accion
@@ -472,7 +471,19 @@ lista de preguntas para tomar accion
 
 
 /*
-Conceptos claves de este curso
+Conceptos claves de este curso del FormData
+
+FormData es un objeto nativo de javascript que nos permite acceder y manipular los datos de un formulario
+
+para crearlo es tan simple como declarar un nuevo objeto con la variable del objeto formulario en cuestión (la cual habras obtenido por su id, class o alguna otra forma)
+
+
+const formularioHome = getElementById("formulario-home")
+const datosFormulario = FormData(formularioHome)
+
+Genial
+
+Ahora lo que nos interesa es acceder a datos o crear nuevos (pero eso es otro tema)
 
 
 setters y getters
@@ -485,3 +496,9 @@ Para poder usar setters y getters en objeto formData
 => es necesario asignar antes el atributo html name
 
 */
+
+
+
+
+
+
