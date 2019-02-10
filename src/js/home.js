@@ -317,12 +317,20 @@ fetch(requestIronMan)
 			
 			//Creando un objeto FormData		
 			const data = new FormData($form);
-			const peli = await getData(`${BASE_API}?limit=1&query_term=${data.get("name")}`)
+
+			/*usando destructuring asignment
+			para obtener una variable*/
+			const {
+
+				data: {
+					movies: pelis
+				} 
+
+			} = await getData(`${BASE_API}?limit=1&query_term=${data.get("name")}`)
 			//Esto es una peticion GET
 
-			/*data.get("name");	*/
 
-			const HTMLstring = movieFoundTemplate(peli.data.movies[0]);
+			const HTMLstring = movieFoundTemplate(pelis[0]);
 			$featuringContainer.innerHTML = HTMLstring;
 
 
@@ -471,29 +479,9 @@ lista de preguntas para tomar accion
 
 
 /*
-Conceptos claves de este curso del FormData
+Conceptos claves de este curso de desustrucutraciuon de obejto
 
-FormData es un objeto nativo de javascript que nos permite acceder y manipular los datos de un formulario
-
-para crearlo es tan simple como declarar un nuevo objeto con la variable del objeto formulario en cuestión (la cual habras obtenido por su id, class o alguna otra forma)
-
-
-const formularioHome = getElementById("formulario-home")
-const datosFormulario = FormData(formularioHome)
-
-Genial
-
-Ahora lo que nos interesa es acceder a datos o crear nuevos (pero eso es otro tema)
-
-
-setters y getters
-
-el primero asigna, el segundo toma
-el primero necesito una llave (key) y un valor
-el segundo solo la llave (key)
-
-Para poder usar setters y getters en objeto formData
-=> es necesario asignar antes el atributo html name
+Asignacion por desustructuracion
 
 */
 
