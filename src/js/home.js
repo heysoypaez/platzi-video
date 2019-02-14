@@ -215,20 +215,22 @@ fetch(requestIronMan)
 	======================================*/
 
 
-	function videoItemTemplate(imgSrc , title) {
+	function videoItemTemplate(movie,category) {
 
 		return(
 			 `<div class="primaryPlaylist">
 	            <h3 class="primaryPlaylist-topic">Está de locos</h3>
-	            <h2 class="primaryPlaylist-title">${title}</h2>
+	            <h2 class="primaryPlaylist-title">${movie.title}</h2>
 
-	            <div class="primaryPlaylist-list" id="${title}">
-	              <div class="primaryPlaylistItem">
+	            <div class="primaryPlaylist-list" id="${movie.title}">
+	              <div class="primaryPlaylistItem" data-id="${movie.id}" data-category=${category}>
+
+
 	                <div class="primaryPlaylistItem-image">
-	                  <img src=${imgSrc}>
+	                  <img src=${movie.medium_cover_image}>
 	                </div>
 	                <h4 class="primaryPlaylistItem-title">
-	                  ${title}
+	                  ${movie.title}
 	                </h4>
 	              </div>
 	            </div>
@@ -248,15 +250,22 @@ fetch(requestIronMan)
 		//Donde el hijo O es el elemento que creamos con videoItemTemplate()
 	}
 
-	function showModal() {
+	function showModal($element) {
 
 		//quitar display none overlay
-		$overlay.classList.add("active")
+		$overlay.classList.add("active");
+
+		const {id, category} = $element.dataset
 
 		//quitar translate de modal
-		$modal.style.animation = "modalIn .8s forwards" //Curso animancione sweb
-	//	$modal.style.transform = "translateY(0px)"
+		$modal.style.animation = "modalIn .8s forwards"; //Curso animancione sweb
 	}
+
+	/*mientras mas propenso me hago a actuar
+	me doy cuenta de que es importante hacerme tambien propenso deternerme a pensar
+	a visualizar, estructurar, modelar mis ideas antes de testearlas
+
+	clarificar imagenes, hacer preguntas, pensar en los conceptos para asi haciendo menos logrando mas*/
 
 	function hideModal() {
 		
@@ -270,7 +279,7 @@ fetch(requestIronMan)
 		},1000);
 	}
 
-	function renderMoviesList(movieList, $container) {
+	function renderMoviesList(movieList, $container, category) {
 
 		$container.children[0].remove(); //eliminando gif que carga
 		//remove elimina el elemento
@@ -280,7 +289,7 @@ fetch(requestIronMan)
 		movieList.data.movies.forEach( (movie) => {
 
 		
-		const HTMLString = videoItemTemplate(movie.medium_cover_image, movie.title)
+		const HTMLString = videoItemTemplate( movie , category )
 
 		const movieElement = createTemplate(HTMLString)
 
@@ -426,9 +435,9 @@ fetch(requestIronMan)
 	console.log("dramaList", dramaList);
 	console.log("animationList", animationList);
 
-	renderMoviesList(actionList , $actionContainer)
-	renderMoviesList(dramaList , $dramaContainer)
-	renderMoviesList(animationList , $animationContainer)
+	renderMoviesList(actionList , $actionContainer, "Action")
+	renderMoviesList(dramaList , $dramaContainer, "Drama")
+	renderMoviesList(animationList , $animationContainer, "Animation")
 
 })() //esta funcion que se autoejecuta gracias a los ultimos parentesis
 
@@ -490,3 +499,9 @@ Asignacion por desustructuracion
 
 
 
+/*dataset arroja datos ordenados
+
+data-id
+data-class
+data-src
+data-category*/
