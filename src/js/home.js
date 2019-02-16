@@ -218,12 +218,12 @@ fetch(requestIronMan)
 	function videoItemTemplate(movie,category) {
 
 		return(
-			 `<div class="primaryPlaylist">
+			 `<div class="primaryPlaylist" data-id="${movie.id}" data-category=${category}>
 	            <h3 class="primaryPlaylist-topic">Está de locos</h3>
 	            <h2 class="primaryPlaylist-title">${movie.title}</h2>
 
 	            <div class="primaryPlaylist-list" id="${movie.title}">
-	              <div class="primaryPlaylistItem" data-id="${movie.id}" data-category=${category}>
+	              <div class="primaryPlaylistItem" >
 
 
 	                <div class="primaryPlaylistItem-image">
@@ -255,11 +255,76 @@ fetch(requestIronMan)
 		//quitar display none overlay
 		$overlay.classList.add("active");
 
-		const {id, category} = $element.dataset
+		let {
+
+			id,
+			category
+
+		} = $element.dataset
+
+
+
+		//convirtiendo el id de string a entero	
+	    id =  parseInt(id, 10) //base 10
+
+	    debugger
+
 
 		//quitar translate de modal
 		$modal.style.animation = "modalIn .8s forwards"; //Curso animancione sweb
+
+		const data = findMovie(id,category)
+
+			//para optimizar el codigo buscamos en modal
+		$modalTitle.textContent = data.title 
+		$modalImage.src = data.medium_cover_image  
+		$modalDescription.textContent =  data.description_full
+
 	}
+
+
+	function findById(list, id) {
+
+
+		/*Usaremos el mètodo find de un array*/
+		return list.find( (movie) => movie.id === id )
+		debugger
+	}
+
+	function findMovie(id,category) {
+
+		/*Aqui filtraremos datos para encontrar algo especifico*/
+
+		switch (category) {
+
+			case "action" : {
+
+				return findById(actionList, id)
+				
+
+			}
+
+			case "animation" : {
+
+				return findById(animationList, id)
+
+			}
+
+			case "drama" : {
+
+				return findById(dramaList, id)
+				
+			}
+
+			default: {
+				return findById(animationList, id)
+			}
+		}
+
+
+
+	}
+
 
 	/*mientras mas propenso me hago a actuar
 	me doy cuenta de que es importante hacerme tambien propenso deternerme a pensar
@@ -286,7 +351,7 @@ fetch(requestIronMan)
 
 
 		//Funcion para mostrar en consola las peliculas
-		movieList.data.movies.forEach( (movie) => {
+		movieList.forEach( (movie) => {
 
 		
 		const HTMLString = videoItemTemplate( movie , category )
@@ -376,7 +441,7 @@ fetch(requestIronMan)
 	function showModalOnClick($element) {
 
 		$element.addEventListener("click", () => {
-			showModal()
+			showModal($element)
 		})
 	}
 
@@ -390,9 +455,9 @@ fetch(requestIronMan)
 	const BASE_API = "https://yts.am/api/v2/list_movies.json"	
 
 	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
-	const actionList = await getData(`${BASE_API}?genre=action`)
-	const dramaList = await getData(`${BASE_API}?genre=drama`)
-	const animationList = await getData(`${BASE_API}?genre=animation`)
+	const { data: { movies: actionList } } = await getData(`${BASE_API}?genre=action`)
+	const { data: { movies: dramaList } } = await getData(`${BASE_API}?genre=drama`)
+	const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
 
 
 	/*Selectores HTML
@@ -435,9 +500,9 @@ fetch(requestIronMan)
 	console.log("dramaList", dramaList);
 	console.log("animationList", animationList);
 
-	renderMoviesList(actionList , $actionContainer, "Action")
-	renderMoviesList(dramaList , $dramaContainer, "Drama")
-	renderMoviesList(animationList , $animationContainer, "Animation")
+	renderMoviesList(actionList , $actionContainer, "action")
+	renderMoviesList(dramaList , $dramaContainer, "drama")
+	renderMoviesList(animationList , $animationContainer, "animation")
 
 })() //esta funcion que se autoejecuta gracias a los ultimos parentesis
 
@@ -496,7 +561,14 @@ Asignacion por desustructuracion
 
 
 
+/*
+blog
 
+
+usando el metodo find con una funcion
+el arte de cazar bugs
+retornar errores con eso
+*/
 
 
 /*dataset arroja datos ordenados
