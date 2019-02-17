@@ -200,249 +200,267 @@ fetch(requestIronMan)
 
 	/*DECLARACION DE FUNCIONES ASINCRONAS
 	======================================*/
-	async function getData(url) {
+		async function getData(url) {
 
-	//Espera a que esto se ejecute
-	const response = await fetch(url) //como es una funcion asincrona no hace falta el .then
+			//Espera a que esto se ejecute
+			const response = await fetch(url) //como es una funcion asincrona no hace falta el .then
 
-	const movieRequest = await response.json() //respuesta del metodo json
+			const movieRequest = await response.json() //respuesta del metodo json
 
-	return movieRequest;
-	}
+			const { data: {movie_count} } = movieRequest
+
+			if(movie_count > 0) {
+
+				return movieRequest;
+			}
+			//Si no hay pelis esto sucede
+			else {
+				  
+				throw new Error(`😓 Me disgusta cuando pasa esto ${nombreUsuario}, busqué y busqué y no encontré NADA `);
+
+			}
+		}
+
+		async function toggleSearchActive(evento) {
+							
+					/*INICIALIZACIÓN DE ARCHIVO
+					============================*/
+					evento.preventDefault();		
+					
+					
+					/*DECLARACIÓN DE VARIABLES
+					===========================*/
+					const $loader = document.createElement("IMG");
+					const $copyText = document.createElement("P");
+
+					
+					//Creando un objeto FormData		
+					const data = new FormData($form);
+
+
+					/*EJECUCION FUNCIONES RENDER
+					=============================*/
+					$home.classList.toggle("search-active"); //on - off in this class
+
+					setAttributes($loader, {
+						src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emoji_u1f60f.svg/128px-Emoji_u1f60f.svg.png",
+						height: 30,
+						width: 30,
+					})
+					setAttributes($copyText, null, `${nombreUsuario}, Apuesto que esta es la  pelicula que buscas, ¿O no?` )
+
+					$featuringContainer.append($copyText)	
+					$featuringContainer.append($loader)	
+
+
+					try {
+
+						/*usando destructuring asignment
+						para obtener una variable*/
+						const {
+
+							data: {
+								movies: pelis
+							} 
+
+						} = await getData(`${BASE_API}?limit=1&query_term=${data.get("name")}`)
+						//Esto es una peticion GET
+
+
+						const HTMLstring = movieFoundTemplate(pelis[0]);
+						$featuringContainer.innerHTML = HTMLstring;
+					} 
+
+					catch(error) {
+						
+						$loader.remove();
+						$home.classList.remove("search-active")
+
+						alert(error.message)
+
+					}
+		}
 
 
 	/*DECLARACION DE FUNCIONES SINCRONAS
 	======================================*/
 
 
-	function videoItemTemplate(movie,category) {
+		function videoItemTemplate(movie,category) {
 
-		return(
-			 `<div class="primaryPlaylist" data-id="${movie.id}" data-category=${category}>
-	            <h3 class="primaryPlaylist-topic">Está de locos</h3>
-	            <h2 class="primaryPlaylist-title">${movie.title}</h2>
+			return(
+				 `<div class="primaryPlaylist" data-id="${movie.id}" data-category=${category}>
+		            <h3 class="primaryPlaylist-topic">Está de locos</h3>
+		            <h2 class="primaryPlaylist-title">${movie.title}</h2>
 
-	            <div class="primaryPlaylist-list" id="${movie.title}">
-	              <div class="primaryPlaylistItem" >
-
-
-	                <div class="primaryPlaylistItem-image">
-	                  <img src=${movie.medium_cover_image}>
-	                </div>
-	                <h4 class="primaryPlaylistItem-title">
-	                  ${movie.title}
-	                </h4>
-	              </div>
-	            </div>
-
-	          </div>`
-			)
-	}
-
-	function createTemplate(HTMLString) {
-		
-		const $html = document.implementation.createHTMLDocument();
-		//creando un documento html
-
-		$html.body.innerHTML = HTMLString;
-
-		return $html.body.children[0];
-		//Donde el hijo O es el elemento que creamos con videoItemTemplate()
-	}
-
-	function showModal($element) {
-
-		//quitar display none overlay
-		$overlay.classList.add("active");
-
-		let {
-
-			id,
-			category
-
-		} = $element.dataset
+		            <div class="primaryPlaylist-list" id="${movie.title}">
+		              <div class="primaryPlaylistItem" >
 
 
+		                <div class="primaryPlaylistItem-image">
+		                  <img src=${movie.medium_cover_image}>
+		                </div>
+		                <h4 class="primaryPlaylistItem-title">
+		                  ${movie.title}
+		                </h4>
+		              </div>
+		            </div>
 
-		//convirtiendo el id de string a entero	
-	    id =  parseInt(id, 10) //base 10
+		          </div>`
+				)
+		}
 
-	    debugger
+		function createTemplate(HTMLString) {
+			
+			const $html = document.implementation.createHTMLDocument();
+			//creando un documento html
+
+			$html.body.innerHTML = HTMLString;
+
+			return $html.body.children[0];
+			//Donde el hijo O es el elemento que creamos con videoItemTemplate()
+		}
+
+		function showModal($element) {
+
+			//quitar display none overlay
+			$overlay.classList.add("active");
+
+			let {
+
+				id,
+				category
+
+			} = $element.dataset
 
 
-		//quitar translate de modal
-		$modal.style.animation = "modalIn .8s forwards"; //Curso animancione sweb
 
-		const data = findMovie(id,category)
+			//convirtiendo el id de string a entero	
+		    id =  parseInt(id, 10) //base 10
 
-			//para optimizar el codigo buscamos en modal
-		$modalTitle.textContent = data.title 
-		$modalImage.src = data.medium_cover_image  
-		$modalDescription.textContent =  data.description_full
-
-	}
+		    debugger
 
 
-	function findById(list, id) {
+			//quitar translate de modal
+			$modal.style.animation = "modalIn .8s forwards"; //Curso animancione sweb
+
+			const data = findMovie(id,category)
+
+				//para optimizar el codigo buscamos en modal
+			$modalTitle.textContent = data.title 
+			$modalImage.src = data.medium_cover_image  
+			$modalDescription.textContent =  data.description_full
+		}
+
+		function findById(list, id) {
 
 
-		/*Usaremos el mètodo find de un array*/
-		return list.find( (movie) => movie.id === id )
-		debugger
-	}
+			/*Usaremos el mètodo find de un array*/
+			return list.find( (movie) => movie.id === id )
+			debugger
+		}
 
-	function findMovie(id,category) {
+		function findMovie(id,category) {
 
-		/*Aqui filtraremos datos para encontrar algo especifico*/
+			/*Aqui filtraremos datos para encontrar algo especifico*/
 
-		switch (category) {
+			switch (category) {
 
-			case "action" : {
+				case "action" : {
 
-				return findById(actionList, id)
-				
+					return findById(actionList, id)
+					
 
-			}
+				}
 
-			case "animation" : {
+				case "animation" : {
 
-				return findById(animationList, id)
+					return findById(animationList, id)
 
-			}
+				}
 
-			case "drama" : {
+				case "drama" : {
 
-				return findById(dramaList, id)
-				
-			}
+					return findById(dramaList, id)
+					
+				}
 
-			default: {
-				return findById(animationList, id)
+				default: {
+					return findById(animationList, id)
+				}
 			}
 		}
 
-
-
-	}
-
-	function hideModal() {
-		
-		//quitar translate de modal
-		$modal.style.animation = "modalOut .8s forwards" //Curso animancione sweb
-
-		setTimeout(()=>{
-		$overlay.classList.toggle('active');
-		},1000);
-	}
-
-	function renderMoviesList(movieList, $container, category) {
-
-		$container.children[0].remove(); //eliminando gif que carga
-		//remove elimina el elemento
-
-
-		//Funcion para mostrar en consola las peliculas
-		movieList.forEach( (movie) => {
+		function hideModal() {
 			
-			const HTMLString = videoItemTemplate( movie , category )
-			const movieElement = createTemplate(HTMLString) //Convirtiendo en HTML
+			//quitar translate de modal
+			$modal.style.animation = "modalOut .8s forwards" //Curso animancione sweb
 
-			$container.append(movieElement) //Pasando elemento al DOM
-
-			const image = movieElement.querySelector("img")
-			image.addEventListener("load",(event) => {
-
-				/*colocamos event.srcElement, srcElement es el elemento
-				que lanzó el evento*/
-
-				event.srcElement.classList.add("fadeIn") //agregando animacion css usando clases
-
-			})
-			
-
-			showModalOnClick(movieElement)
-		})
-	}
-
-	function setAttributes($element, attributes, $innerHTML) {
-		
-		//loop for Setting attributes
-		for(const attribute in attributes) {
-
-			$element.setAttribute(attribute, attributes[attribute])
+			setTimeout(()=>{
+			$overlay.classList.toggle('active');
+			},1000);
 		}
 
-		$element.innerHTML = $innerHTML
-	}
+		function renderMoviesList(movieList, $container, category) {
 
-	async function toggleSearchActive(evento) {
-			
-			/*INICIALIZACIÓN DE ARCHIVO
-			============================*/
-			evento.preventDefault();		
-			
-			
-			/*DECLARACIÓN DE VARIABLES
-			===========================*/
-			const $loader = document.createElement("IMG");
-			const $copyText = document.createElement("P");
-
-			
-			//Creando un objeto FormData		
-			const data = new FormData($form);
-
-			/*usando destructuring asignment
-			para obtener una variable*/
-			const {
-
-				data: {
-					movies: pelis
-				} 
-
-			} = await getData(`${BASE_API}?limit=1&query_term=${data.get("name")}`)
-			//Esto es una peticion GET
+			$container.children[0].remove(); //eliminando gif que carga
+			//remove elimina el elemento
 
 
-			const HTMLstring = movieFoundTemplate(pelis[0]);
-			$featuringContainer.innerHTML = HTMLstring;
+			//Funcion para mostrar en consola las peliculas
+			movieList.forEach( (movie) => {
+				
+				const HTMLString = videoItemTemplate( movie , category )
+				const movieElement = createTemplate(HTMLString) //Convirtiendo en HTML
 
+				$container.append(movieElement) //Pasando elemento al DOM
 
-			/*EJECUCION FUNCIONES RENDER
-			=============================*/
-			$home.classList.toggle("search-active"); //on - off in this class
+				const image = movieElement.querySelector("img")
+				image.addEventListener("load",(event) => {
 
-			setAttributes($loader, {
-				src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emoji_u1f60f.svg/128px-Emoji_u1f60f.svg.png",
-				height: 30,
-				width: 30,
+					/*colocamos event.srcElement, srcElement es el elemento
+					que lanzó el evento*/
+
+					event.srcElement.classList.add("fadeIn") //agregando animacion css usando clases
+
+				})
+				
+
+				showModalOnClick(movieElement)
 			})
-			setAttributes($copyText, null, `${nombreUsuario}, Apuesto que esta es la  pelicula que buscas, ¿O no?` )
+		}
 
-			$featuringContainer.append($copyText)	
-			$featuringContainer.append($loader)
-		
-	}
+		function setAttributes($element, attributes, $innerHTML) {
+			
+			//loop for Setting attributes
+			for(const attribute in attributes) {
 
-	function movieFoundTemplate(peli) {
-		return (
-		`<div class="featuring">
-      		<div class="featuring-image">
-        		<img src="${peli.medium_cover_image}" width="70" height="100" alt="">
-        	</div>
-        	
-        	<div class="featuring-content">
-        		<p class="featuring-title">Pelicula encontrada</p>
-        		<p class="featuring-album">${peli.title}</p>
-        	</div>
-        </div>`)
-	}
+				$element.setAttribute(attribute, attributes[attribute])
+			}
 
-	function showModalOnClick($element) {
+			$element.innerHTML = $innerHTML
+		}
 
-		$element.addEventListener("click", () => {
-			showModal($element)
-		})
-	}
+		function movieFoundTemplate(peli) {
+			return (
+			`<div class="featuring">
+	      		<div class="featuring-image">
+	        		<img src="${peli.medium_cover_image}" width="70" height="100" alt="">
+	        	</div>
+	        	
+	        	<div class="featuring-content">
+	        		<p class="featuring-title">Pelicula encontrada</p>
+	        		<p class="featuring-album">${peli.title}</p>
+	        	</div>
+	        </div>`)
+		}
+
+		function showModalOnClick($element) {
+
+			$element.addEventListener("click", () => {
+				showModal($element)
+			})
+		}
 
 
 	/*DECLARACIÓN DE VARIABLES
@@ -452,56 +470,55 @@ fetch(requestIronMan)
 	/*Selectores HTML
 	===================*/
 
-	const $featuringContainer = document.querySelector("#featuring") 
-	
-	const $form = document.querySelector("#form") 
-	const $home = document.querySelector("#home") 
+		const $featuringContainer = document.querySelector("#featuring") 
+		
+		const $form = document.querySelector("#form") 
+		const $home = document.querySelector("#home") 
 
-	//El "$" es una convención para decir que es un elemento del DOM
-	const $modal = document.getElementById("modal")
+		//El "$" es una convención para decir que es un elemento del DOM
+		const $modal = document.getElementById("modal")
 
 
-	const $actionContainer = document.querySelector("#action")
-	const $animationContainer = document.getElementById("animation")
-	const $dramaContainer = document.getElementById("drama")	
+		const $actionContainer = document.querySelector("#action")
+		const $animationContainer = document.getElementById("animation")
+		const $dramaContainer = document.getElementById("drama")	
 
-	
-	const $overlay = document.getElementById("overlay")
-	const $hideModal = document.getElementById("hide-modal")
+		
+		const $overlay = document.getElementById("overlay")
+		const $hideModal = document.getElementById("hide-modal")
 
-	//para optimizar el codigo buscamos en modal
-	const $modalImage =  $modal.querySelector("img")
-	const $modalTitle =  $modal.querySelector("h1")
-	const $modalDescription =  $modal.querySelector("p")
+		//para optimizar el codigo buscamos en modal
+		const $modalImage =  $modal.querySelector("img")
+		const $modalTitle =  $modal.querySelector("h1")
+		const $modalDescription =  $modal.querySelector("p")
 
 
 	/*API data
 	==================*/
 
-	const BASE_API = "https://yts.am/api/v2/list_movies.json"	
+		const BASE_API = "https://yts.am/api/v2/list_movies.json"	
 
-	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
-	const { data: { movies: actionList } } = await getData(`${BASE_API}?genre=action`)
-	renderMoviesList(actionList , $actionContainer, "action")
+		//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
+		const { data: { movies: actionList } } = await getData(`${BASE_API}?genre=action`)
+		renderMoviesList(actionList , $actionContainer, "action")
 
-	const { data: { movies: dramaList } } = await getData(`${BASE_API}?genre=drama`)
-	renderMoviesList(dramaList , $dramaContainer, "drama")
+		const { data: { movies: dramaList } } = await getData(`${BASE_API}?genre=drama`)
+		renderMoviesList(dramaList , $dramaContainer, "drama")
 
-	const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
-	renderMoviesList(animationList , $animationContainer, "animation")
+		const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
+		renderMoviesList(animationList , $animationContainer, "animation")
 
 
 	/*ESCUCHADORES DE EVENTOS
 	==========================*/
 
-	$form.addEventListener("submit", toggleSearchActive) //añadire un evento formulario
-	$hideModal.addEventListener("click" , hideModal ) //evento modal (ficha de peli)
+		$form.addEventListener("submit", toggleSearchActive) //añadire un evento formulario
+		$hideModal.addEventListener("click" , hideModal ) //evento modal (ficha de peli)
 
 
 	/*EJECUCION DE FUNCIONES 
 	================================*/
 
-	
 })() //esta funcion que se autoejecuta gracias a los ultimos parentesis
 
 
@@ -545,3 +562,31 @@ lista de preguntas para tomar accion
 - Si no entiendo, siguiendo y teniendo fe
 */
 
+
+/*
+Blog errores
+
+Te vas a equivocar de eso no hay duda
+
+Yo incluso estoy desarrollando el emocionarme al dar reload y ver donde me equivoque
+
+la pregunta no es si te vas a equivocar sino donde
+
+Y màs te vale (y me vale) que no te equivoques en lo mismo, que evites el error, que entiendas lo que hagas
+
+
+Pero de todos modos te enseñare un sistema simple para manejar errores
+
+
+Hay varios tipos de eroores
+error http, error typo, cae internet
+*/
+
+
+
+/*
+desafio para colocar en la playlist de amigos personas al azar usando ramdor user me
+
+
+y my playlist colocar peliculas
+*/
