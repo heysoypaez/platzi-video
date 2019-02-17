@@ -1,14 +1,8 @@
 /**/
 
-/*Branding resources
-======================*/
+@import "variables.scss";
 
-/*Branding color
-===============*/
 
-$color-brand-principal: #5555ff;
-
-$font-brand-principal: helvetica;
 
 h1 , h2 {
 
@@ -17,3 +11,11 @@ h1 , h2 {
 
 }
 
+body {
+	background-color: $color-brand-secondary; 
+	color: $color-brand-principal;
+}
+
+.primaryPlaylist-title {
+	color: red;
+}
