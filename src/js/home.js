@@ -325,20 +325,11 @@ fetch(requestIronMan)
 
 	}
 
-
-	/*mientras mas propenso me hago a actuar
-	me doy cuenta de que es importante hacerme tambien propenso deternerme a pensar
-	a visualizar, estructurar, modelar mis ideas antes de testearlas
-
-	clarificar imagenes, hacer preguntas, pensar en los conceptos para asi haciendo menos logrando mas*/
-
 	function hideModal() {
 		
 		//quitar translate de modal
 		$modal.style.animation = "modalOut .8s forwards" //Curso animancione sweb
-		//$modal.style.transform = "translateY(0px)"
 
-		//quitar display none overlay
 		setTimeout(()=>{
 		$overlay.classList.toggle('active');
 		},1000);
@@ -352,16 +343,24 @@ fetch(requestIronMan)
 
 		//Funcion para mostrar en consola las peliculas
 		movieList.forEach( (movie) => {
+			
+			const HTMLString = videoItemTemplate( movie , category )
+			const movieElement = createTemplate(HTMLString) //Convirtiendo en HTML
 
-		
-		const HTMLString = videoItemTemplate( movie , category )
+			$container.append(movieElement) //Pasando elemento al DOM
 
-		const movieElement = createTemplate(HTMLString)
+			const image = movieElement.querySelector("img")
+			image.addEventListener("load",(event) => {
 
-		//Pasando elemento al DOM
-		$container.append(movieElement)
+				/*colocamos event.srcElement, srcElement es el elemento
+				que lanzó el evento*/
 
-		showModalOnClick(movieElement)
+				event.srcElement.classList.add("fadeIn") //agregando animacion css usando clases
+
+			})
+			
+
+			showModalOnClick(movieElement)
 		})
 	}
 
@@ -449,16 +448,6 @@ fetch(requestIronMan)
 	/*DECLARACIÓN DE VARIABLES
 	============================*/
 
-	/*API data
-	==================*/
-
-	const BASE_API = "https://yts.am/api/v2/list_movies.json"	
-
-	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
-	const { data: { movies: actionList } } = await getData(`${BASE_API}?genre=action`)
-	const { data: { movies: dramaList } } = await getData(`${BASE_API}?genre=drama`)
-	const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
-
 
 	/*Selectores HTML
 	===================*/
@@ -486,6 +475,22 @@ fetch(requestIronMan)
 	const $modalDescription =  $modal.querySelector("p")
 
 
+	/*API data
+	==================*/
+
+	const BASE_API = "https://yts.am/api/v2/list_movies.json"	
+
+	//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
+	const { data: { movies: actionList } } = await getData(`${BASE_API}?genre=action`)
+	renderMoviesList(actionList , $actionContainer, "action")
+
+	const { data: { movies: dramaList } } = await getData(`${BASE_API}?genre=drama`)
+	renderMoviesList(dramaList , $dramaContainer, "drama")
+
+	const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
+	renderMoviesList(animationList , $animationContainer, "animation")
+
+
 	/*ESCUCHADORES DE EVENTOS
 	==========================*/
 
@@ -496,32 +501,21 @@ fetch(requestIronMan)
 	/*EJECUCION DE FUNCIONES 
 	================================*/
 
-	console.log("actionList", actionList);
-	console.log("dramaList", dramaList);
-	console.log("animationList", animationList);
-
-	renderMoviesList(actionList , $actionContainer, "action")
-	renderMoviesList(dramaList , $dramaContainer, "drama")
-	renderMoviesList(animationList , $animationContainer, "animation")
-
+	
 })() //esta funcion que se autoejecuta gracias a los ultimos parentesis
 
-/* 
-¿Cuantos procesos independientes hay en mi programa?
-
-Es util convertir todo lo que puedas en una funcion de una forma reutilizable en otras partes de tu APP
-
-*/
 
 
+/*APUNTES BLOG APORTE
 
+Las animaciones vienen en eventos
+fadeIn
+fadeOut
 
-/*PREGUNTAS CLAVES
-¿Como obtengo el dato del formulario? para realizar una peticion personanilzada
+hacer peticiones en momento correcto para optimizar carga
 
-Opciones:
-querySelector + value
-formData
+optimizar animaciones para imagenes y objetos especificos
+usando el evento load
 
 */
 
@@ -551,29 +545,3 @@ lista de preguntas para tomar accion
 - Si no entiendo, siguiendo y teniendo fe
 */
 
-
-/*
-Conceptos claves de este curso de desustrucutraciuon de obejto
-
-Asignacion por desustructuracion
-
-*/
-
-
-
-/*
-blog
-
-
-usando el metodo find con una funcion
-el arte de cazar bugs
-retornar errores con eso
-*/
-
-
-/*dataset arroja datos ordenados
-
-data-id
-data-class
-data-src
-data-category*/
