@@ -7,189 +7,188 @@ Descripcion: pasando De jquery a javascript
 /*INICIALIZACION DE ARCHIVO
 ======================================================*/
 
-console.log('Inicializando archivo');
+	console.log('Inicializando archivo');
+
 
 /*DECLARACION DE VARIABLES
 =========================================================*/
 
-const nombreUsuario = "Daniel";
-let usuario = "@heysoypaez"
-
+	const nombreUsuario = "Daniel";
+	let usuario = "@heysoypaez"
 
 
 /* DECLARACION DE FUNCIONES
 =========================================================*/
 
-function cambiarNombre(nuevoNombre) {
-  cambia = nuevoNombre
-}
-
+	function cambiarNombre(nuevoNombre) {
+	  cambia = nuevoNombre
+	}
 
 
 /* DECLARACION DE PROMESAS
 =========================================================*/
 
 
-//Creando una promesa
-const getUser = new Promise(function(todoChevere,error) {
+	//Creando una promesa
+	const getUser = new Promise(function(todoChevere,error) {
 
-	// llamar un api
-	setTimeout(function(){
-		//Luego de 3 segundos se ejecuta esto
-		todoChevere("GANE? No, llegue en 3 segundos");
-	}, 3000)
+		// llamar un api
+		setTimeout(function(){
+			//Luego de 3 segundos se ejecuta esto
+			todoChevere("GANE? No, llegue en 3 segundos");
+		}, 3000)
 
-	if(!todoChevere) {
+		if(!todoChevere) {
 
-	error("Damas y caballeros... hubo un error")
-	
-	}
-
-})
-
-//Creando una promesa
-const getUserAll = new Promise(function(todoChevere,error) {
-
-	// llamar un api
-	setTimeout( function() {
-		//Luego de 3 segundos se ejecuta esto
-		todoChevere("GANE A LOS 2 SEGUNDOS");
-	}, 2000)
-
-	if(!todoChevere) {
-
-	error("Damas y caballeros... hubo un error")
-
-	}
-	
-})
-
-
-/*EJECUCION (CONSUMO) DE PROMESAS
-=========================================================*/
-
-
-	/*PROMISE.RACE()
-	Este método envia a la promesa que termine primero */
-
-	Promise.race([
-	getUser,
-	getUserAll
-	])
-
-	.then(function(mensaje) {
-	console.log(mensaje)
-	})
-
-
-
-
-//Metodos si todo va bien
-getUser
-	.then( function (mensaje) {
-
-	console.log(`HEY ${mensaje}`)
+		error("Damas y caballeros... hubo un error")
+		
+		}
 
 	})
 
-	
-	/* PROMISE.ALL() 
-	Espera a que todas las promesas esten listas 
-	y las ejecuta todas en el orden declarado */
+	//Creando una promesa
+	const getUserAll = new Promise(function(todoChevere,error) {
 
-	Promise.all([
-	getUser,
-	getUserAll,
-	])
+		// llamar un api
+		setTimeout( function() {
+			//Luego de 3 segundos se ejecuta esto
+			todoChevere("GANE A LOS 2 SEGUNDOS");
+		}, 2000)
 
-	.then(function(mensaje) {
+		if(!todoChevere) {
 
-	console.log(`Ya en serio ${mensaje}`)
+		error("Damas y caballeros... hubo un error")
 
+		}
+		
 	})
-	
 
-	
-	//Metodo de Promise cuando las cosas van mal
-	.catch( function(mensaje) {
 
-	console.error(mensaje)
+	/*EJECUCION (CONSUMO) DE PROMESAS
+	=========================================================*/
 
-	})
+
+		/*PROMISE.RACE()
+		Este método envia a la promesa que termine primero */
+
+		Promise.race([
+		getUser,
+		getUserAll
+		])
+
+		.then(function(mensaje) {
+		console.log(mensaje)
+		})
+
+
+
+
+	//Metodos si todo va bien
+	getUser
+		.then( function (mensaje) {
+
+		console.log(`HEY ${mensaje}`)
+
+		})
+
+		
+		/* PROMISE.ALL() 
+		Espera a que todas las promesas esten listas 
+		y las ejecuta todas en el orden declarado */
+
+		Promise.all([
+		getUser,
+		getUserAll,
+		])
+
+		.then(function(mensaje) {
+
+		console.log(`Ya en serio ${mensaje}`)
+
+		})
+		
+
+		
+		//Metodo de Promise cuando las cosas van mal
+		.catch( function(mensaje) {
+
+		console.error(mensaje)
+
+		})
 
 
 /*LLAMADAS AJAX A API
 ==============================================================*/
 
-//parametros:  url , objeto
-$.ajax("https://randomuser.me/api/",{
+	//parametros:  url , objeto
+	$.ajax("https://randomuser.me/api/",{
 
-	methood: "GET", //GET traer datos, si entregas es POST
-	success: function(data) {
-		console.log(data)
-	},
-	error: function(error) {
-		console.log(error)
+		methood: "GET", //GET traer datos, si entregas es POST
+		success: function(data) {
+			console.log(data)
+		},
+		error: function(error) {
+			console.log(error)
+		}
+	})
+
+	//Esto en realidad es un XMLHttpRequest
+
+	/*param: url, settings
+	fetch devuelve una promesa
+	*/
+	fetch("https://randomuser.me/api/")
+
+		.then( function(response){
+			// console.log(response)
+			return response.json()
+		})
+
+		.then( function(user){
+			console.log("user FETCH",user.results[0].name.first)
+		})
+
+		.catch( function() {
+			console.error("Señores, he fallado")
+		});
+	//si no colocas settings la coloca por defecto
+
+	//las promesas pueden devolver una promesa y asi sucesivament
+
+	//results es un array
+
+
+
+	const requestIronMan = "https://gateway.marvel.com:443/v1/public/characters?name=Iron%20Man&limit=10&apikey=8a51c58308bb4e6fb2b8532c7e7536d3"
+
+
+	const settingsMarvel = {
+
+	  method: 'POST', // or 'PUT'
+	 // body: JSON.stringify(data), // data can be `string` or {object}!
+	  headers:{
+	    'Content-Type': 'application/json'
+	  }
+
 	}
-})
-
-//Esto en realidad es un XMLHttpRequest
-
-/*param: url, settings
-fetch devuelve una promesa
-*/
-fetch("https://randomuser.me/api/")
-
-	.then( function(response){
-		// console.log(response)
-		return response.json()
-	})
-
-	.then( function(user){
-		console.log("user FETCH",user.results[0].name.first)
-	})
-
-	.catch( function() {
-		console.error("Señores, he fallado")
-	});
-//si no colocas settings la coloca por defecto
-
-//las promesas pueden devolver una promesa y asi sucesivament
-
-//results es un array
 
 
+	fetch(requestIronMan)
 
-const requestIronMan = "https://gateway.marvel.com:443/v1/public/characters?name=Iron%20Man&limit=10&apikey=8a51c58308bb4e6fb2b8532c7e7536d3"
+		.then( function(response, settingsMarvel){
+			// console.log(response)
+			return response.json()
+		})
 
+		.then( function(user){
+			console.log("TED FETCH",user )
+		})
 
-const settingsMarvel = {
+		.catch( function() {
+			console.error("Señores, he fallado")
+		});	
 
-  method: 'POST', // or 'PUT'
- // body: JSON.stringify(data), // data can be `string` or {object}!
-  headers:{
-    'Content-Type': 'application/json'
-  }
-
-}
-
-
-fetch(requestIronMan)
-
-	.then( function(response, settingsMarvel){
-		// console.log(response)
-		return response.json()
-	})
-
-	.then( function(user){
-		console.log("TED FETCH",user )
-	})
-
-	.catch( function() {
-		console.error("Señores, he fallado")
-	});	
-
-/*=================================================*/
+	/*=================================================*/
 
 
 /*DECLARACION DE FUNCIONES ASINCRONAS
@@ -200,26 +199,37 @@ fetch(requestIronMan)
 
 	/*DECLARACION DE FUNCIONES ASINCRONAS
 	======================================*/
-		async function getData(url) {
+   		async function getData(url) {
 
-			//Espera a que esto se ejecute
-			const response = await fetch(url) //como es una funcion asincrona no hace falta el .then
+					//Espera a que esto se ejecute
+					const response = await fetch(url) //como es una funcion asincrona no hace falta el .then
 
-			const movieRequest = await response.json() //respuesta del metodo json
+					const dataRequest = await response.json() //respuesta del metodo json
 
-			const { data: {movie_count} } = movieRequest
+					//dataRequest.data nos permite acceder a la api de las peliculas
+					//necesito otra forma de validar que estoy manejando la API de peliculas
+					if (dataRequest.data !== undefined) {
 
-			if(movie_count > 0) {
+								const { data: {movie_count} } = dataRequest
 
-				return movieRequest;
-			}
-			//Si no hay pelis esto sucede
-			else {
-				  
-				throw new Error(`😓 Me disgusta cuando pasa esto ${nombreUsuario}, busqué y busqué y no encontré NADA `);
+								if(movie_count > 0) {
 
-			}
-		}
+									return dataRequest;
+								}
+								//Si no hay pelis esto sucede
+								else {
+									
+									//Throw funciona como un return  
+									throw new Error(`😓 Me disgusta cuando pasa esto ${nombreUsuario}, busqué y busqué y no encontré NADA `);
+								}
+					}
+
+					else {
+
+						return dataRequest;
+					}
+				}
+
 
 		async function toggleSearchActive(evento) {
 							
@@ -310,6 +320,7 @@ fetch(requestIronMan)
 				)
 		}
 
+		//convierte string en html
 		function createTemplate(HTMLString) {
 			
 			const $html = document.implementation.createHTMLDocument();
@@ -338,7 +349,7 @@ fetch(requestIronMan)
 			//convirtiendo el id de string a entero	
 		    id =  parseInt(id, 10) //base 10
 
-		    debugger
+	
 
 
 			//quitar translate de modal
@@ -463,6 +474,38 @@ fetch(requestIronMan)
 		}
 
 
+		function friendPlayListTemplate(friend) {
+
+			return (
+
+				`<li class="playlistFriends-item">
+              <a href="#">
+                <img src="${friend.picture.thumbnail}" alt="${friend.name.first}-${friend.name.last}-picture" />
+                <span>
+                  ${friend.name.first} ${friend.name.last}
+                </span>
+              </a>
+            </li>`
+      )
+		}
+
+		function renderFriendPlaylist(friend) {
+
+			const HTMLString = friendPlayListTemplate(friend);
+			const $friendPlayListItem = createTemplate(HTMLString)
+			return $playlistFriendsPrincipal.appendChild($friendPlayListItem)
+		}
+
+		async function renderAllFriendsPlaylist(friendsLimit) {
+
+			for (let i = 0; i < friendsLimit; i++) {
+
+				let {results: [friend] } = await getData('https://randomuser.me/api/')
+				renderFriendPlaylist(friend)
+			}
+		}
+
+
 	/*DECLARACIÓN DE VARIABLES
 	============================*/
 
@@ -492,6 +535,9 @@ fetch(requestIronMan)
 		const $modalTitle =  $modal.querySelector("h1")
 		const $modalDescription =  $modal.querySelector("p")
 
+		const $playlistFriends = document.body.getElementsByClassName("playlistFriends")
+		const $playlistFriendsPrincipal = $playlistFriends[0]
+
 
 	/*API data
 	==================*/
@@ -508,7 +554,9 @@ fetch(requestIronMan)
 		const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
 		renderMoviesList(animationList , $animationContainer, "animation")
 
+		renderAllFriendsPlaylist(5)
 
+		
 	/*ESCUCHADORES DE EVENTOS
 	==========================*/
 
@@ -589,4 +637,9 @@ desafio para colocar en la playlist de amigos personas al azar usando ramdor use
 
 
 y my playlist colocar peliculas
+
+ 
+
+
+
 */

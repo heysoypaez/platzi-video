@@ -1,0 +1,21 @@
+/**/
+
+@import "variables.scss";
+@import "basics-html/inputs/form.scss";
+
+
+h1 , h2 {
+
+	color: $color-brand-principal;
+	font-family: $font-brand-principal;
+
+}
+
+body {
+	background-color: $color-brand-secondary; 
+	color: $color-brand-principal;
+}
+
+.primaryPlaylist-title {
+	color: red;
+}
