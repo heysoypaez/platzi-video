@@ -135,7 +135,7 @@ body {
 }
 
 .search input {
-  background: #f0f0f0;
+ /* background: #f0f0f0;*/
   font-family: "Lato";
   padding: 10px;
   border-radius: 10px;
