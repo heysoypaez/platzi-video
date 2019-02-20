@@ -473,36 +473,67 @@ Descripcion: pasando De jquery a javascript
 			})
 		}
 
+		//======
 
-		function friendPlayListTemplate(friend) {
+			function friendPlayListTemplate(friend) {
 
-			return (
+				return (
 
-				`<li class="playlistFriends-item">
+					`<li class="playlistFriends-item">
+	              <a href="#">
+	                <img src="${friend.picture.thumbnail}" alt="${friend.name.first}-${friend.name.last}-picture" />
+	                <span>
+	                  ${friend.name.first} ${friend.name.last}
+	                </span>
+	              </a>
+	            </li>`
+	      )
+			}
+
+			function renderFriendPlaylist(friend) {
+
+				const HTMLString = friendPlayListTemplate(friend);
+				const $friendPlayListItem = createTemplate(HTMLString)
+				return $playlistFriendsPrincipal.appendChild($friendPlayListItem)
+			}
+
+			async function renderAllFriendsPlaylist(friendsLimit) {
+
+				for (let i = 0; i < friendsLimit; i++) {
+
+					let {results: [friend] } = await getData('https://randomuser.me/api/')
+					renderFriendPlaylist(friend)
+				}
+			}
+
+		//=========
+
+		function moviesPlaylistTemplate(movie) {
+			return(
+				`<li class="myPlaylist-item">
               <a href="#">
-                <img src="${friend.picture.thumbnail}" alt="${friend.name.first}-${friend.name.last}-picture" />
                 <span>
-                  ${friend.name.first} ${friend.name.last}
+                  ${movie.title}
                 </span>
               </a>
-            </li>`
+          </li>`
       )
 		}
 
-		function renderFriendPlaylist(friend) {
+		function renderMoviesPlaylist(movie) {
 
-			const HTMLString = friendPlayListTemplate(friend);
-			const $friendPlayListItem = createTemplate(HTMLString)
-			return $playlistFriendsPrincipal.appendChild($friendPlayListItem)
+				const HTMLString = moviesPlaylistTemplate(movie);
+				const $moviePlayListItem = createTemplate(HTMLString)
+				return $playlistMoviesPrincipal.appendChild($moviePlayListItem)
 		}
 
-		async function renderAllFriendsPlaylist(friendsLimit) {
+		async function renderAllMoviesPlaylist(moviesLimit = 10) {
 
-			for (let i = 0; i < friendsLimit; i++) {
+				for (let i = 0; i < moviesLimit; i++) {
 
-				let {results: [friend] } = await getData('https://randomuser.me/api/')
-				renderFriendPlaylist(friend)
-			}
+					let {data: { movies } } = await getData(`${BASE_API}`)
+					renderMoviesPlaylist(movies[i])
+				}
 		}
 
 
@@ -538,6 +569,10 @@ Descripcion: pasando De jquery a javascript
 		const $playlistFriends = document.body.getElementsByClassName("playlistFriends")
 		const $playlistFriendsPrincipal = $playlistFriends[0]
 
+		const $playlistMovies = document.body.getElementsByClassName("myPlaylist")
+		const $playlistMoviesPrincipal = $playlistMovies[0]
+
+
 
 	/*API data
 	==================*/
@@ -554,8 +589,10 @@ Descripcion: pasando De jquery a javascript
 		const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
 		renderMoviesList(animationList , $animationContainer, "animation")
 
-		renderAllFriendsPlaylist(5)
 
+
+		renderAllFriendsPlaylist(5)
+		renderAllMoviesPlaylist()
 		
 	/*ESCUCHADORES DE EVENTOS
 	==========================*/
