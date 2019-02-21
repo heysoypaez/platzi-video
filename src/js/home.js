@@ -158,7 +158,6 @@ Descripcion: pasando De jquery a javascript
 	//results es un array
 
 
-
 	const requestIronMan = "https://gateway.marvel.com:443/v1/public/characters?name=Iron%20Man&limit=10&apikey=8a51c58308bb4e6fb2b8532c7e7536d3"
 
 
@@ -189,6 +188,14 @@ Descripcion: pasando De jquery a javascript
 		});	
 
 	/*=================================================*/
+
+
+/*
+No hay nada que no sea capaz de hacer
+tengo el mapa, profundiza en el, usalo
+
+¿Cual es el enunciado de eso que quieres programar?
+*/
 
 
 /*DECLARACION DE FUNCIONES ASINCRONAS
@@ -473,7 +480,28 @@ Descripcion: pasando De jquery a javascript
 			})
 		}
 
-		//======
+		/*Si no hay cache voy a tener que pedir datos y para mantener correcto el codigo
+		necesito esperar a que lleguen esos datos
+		eso lo hago con una funcion asincrona*/
+		async function cacheExist(category) {
+
+			const listName = `${category}List`;
+			const cacheList = window.localStorage.getItem(listName);
+
+			if (cacheList) {
+				return  JSON.parse(cacheList);
+			}
+			else{
+
+				const { data: { movies: data } }  = await getData(`${BASE_API}?genre=${category}`);
+				window.localStorage.setItem(listName, JSON.stringify(data) );
+
+				return data;
+			}
+
+		}
+
+		// friend PlayList
 
 			function friendPlayListTemplate(friend) {
 
@@ -506,35 +534,35 @@ Descripcion: pasando De jquery a javascript
 				}
 			}
 
-		//=========
+		// movies Playlist
 
-		function moviesPlaylistTemplate(movie) {
-			return(
-				`<li class="myPlaylist-item">
-              <a href="#">
-                <span>
-                  ${movie.title}
-                </span>
-              </a>
-          </li>`
-      )
-		}
+			function moviesPlaylistTemplate(movie) {
+				return(
+					`<li class="myPlaylist-item">
+	              <a href="#">
+	                <span>
+	                  ${movie.title}
+	                </span>
+	              </a>
+	          </li>`
+	      )
+			}
 
-		function renderMoviesPlaylist(movie) {
+			function renderMoviesPlaylist(movie) {
 
-				const HTMLString = moviesPlaylistTemplate(movie);
-				const $moviePlayListItem = createTemplate(HTMLString)
-				return $playlistMoviesPrincipal.appendChild($moviePlayListItem)
-		}
+					const HTMLString = moviesPlaylistTemplate(movie);
+					const $moviePlayListItem = createTemplate(HTMLString)
+					return $playlistMoviesPrincipal.appendChild($moviePlayListItem)
+			}
 
-		async function renderAllMoviesPlaylist(moviesLimit = 10) {
+			async function renderAllMoviesPlaylist(moviesLimit = 10) {
 
-				for (let i = 0; i < moviesLimit; i++) {
+					for (let i = 0; i < moviesLimit; i++) {
 
-					let {data: { movies } } = await getData(`${BASE_API}`)
-					renderMoviesPlaylist(movies[i])
-				}
-		}
+						let {data: { movies } } = await getData(`${BASE_API}`)
+						renderMoviesPlaylist(movies[i])
+					}
+			}
 
 
 	/*DECLARACIÓN DE VARIABLES
@@ -580,18 +608,14 @@ Descripcion: pasando De jquery a javascript
 		const BASE_API = "https://yts.am/api/v2/list_movies.json"	
 
 		//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
-		const { data: { movies: actionList } } = await getData(`${BASE_API}?genre=action`)
-		window.localStorage.setItem("actionList", JSON.stringify(actionList))
-		renderMoviesList(actionList , $actionContainer, "actio		n")
+		const actionList = await cacheExist("action")
+		renderMoviesList(actionList , $actionContainer, "action")
 
-		const { data: { movies: dramaList } } = await getData(`${BASE_API}?genre=drama`)
-		window.localStorage.setItem("dramaList", JSON.stringify(dramaList))
+		const dramaList = await cacheExist("drama")
 		renderMoviesList(dramaList , $dramaContainer, "drama")
 		
 
-
-		const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
-		window.localStorage.setItem("animationList", JSON.stringify(animationList))
+		const animationList = await cacheExist("animation")
 		renderMoviesList(animationList , $animationContainer, "animation")
 
 
@@ -604,6 +628,11 @@ Descripcion: pasando De jquery a javascript
 
 		$form.addEventListener("submit", toggleSearchActive) //añadire un evento formulario
 		$hideModal.addEventListener("click" , hideModal ) //evento modal (ficha de peli)
+
+
+
+	/*DECLARACIÓN DE ARRAYS
+	============================*/
 
 
 	/*EJECUCION DE FUNCIONES 
@@ -685,3 +714,25 @@ y my playlist colocar peliculas
 
 
 */
+
+
+
+/*
+Desafio
+
+traer nuevos datos luego de un tiempo con set time out
+traer datos con session storage
+
+desafio
+aplicar cache a las otras api que llame
+
+
+Si se desea volver a traer los datos se puede hacer lo siguiente:
+
+Poner un botón que traiga los datos
+	boton
+	recall api
+	sin recargar pagina
+
+Hacer un setTimeout que borre el localStorage.
+D*/
