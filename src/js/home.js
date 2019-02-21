@@ -581,12 +581,17 @@ Descripcion: pasando De jquery a javascript
 
 		//esto necesita el await porque devuelve una promesa arriba y tiene que esperar
 		const { data: { movies: actionList } } = await getData(`${BASE_API}?genre=action`)
-		renderMoviesList(actionList , $actionContainer, "action")
+		window.localStorage.setItem("actionList", JSON.stringify(actionList))
+		renderMoviesList(actionList , $actionContainer, "actio		n")
 
 		const { data: { movies: dramaList } } = await getData(`${BASE_API}?genre=drama`)
+		window.localStorage.setItem("dramaList", JSON.stringify(dramaList))
 		renderMoviesList(dramaList , $dramaContainer, "drama")
+		
+
 
 		const { data: { movies: animationList } } = await getData(`${BASE_API}?genre=animation`)
+		window.localStorage.setItem("animationList", JSON.stringify(animationList))
 		renderMoviesList(animationList , $animationContainer, "animation")
 
 

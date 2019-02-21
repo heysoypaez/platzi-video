@@ -1,0 +1,15 @@
+local storage
+
+clear()
+
+setItem(key,value)
+getItem(key)
+
+Solo puedo guardar texto plano
+
+,
+
+JSON.stringgify({})
+
+JSON.parse("")
+
