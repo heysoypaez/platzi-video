@@ -1,21 +1,29 @@
-/**/
+/*Importacion de archivos parciales scss
+========================================*/
 
-@import "variables.scss";
-@import "basics-html/inputs/form.scss";
+	@import "_variables.scss";
+
+	@import "basics-html/containers/_div.scss";
+	@import "basics-html/containers/_section.scss";
+
+	@import "basics-html/inputs/_buttons.scss";
+	@import "basics-html/inputs/_form.scss";
 
 
-h1 , h2 {
+/*EJECUCION DE CSS
+===================================*/	
+	h1 , h2 {
 
-	color: $color-brand-principal;
-	font-family: $font-brand-principal;
+		color: $color-brand-principal;
+		font-family: $font-brand-principal;
 
-}
+	}
 
-body {
-	background-color: $color-brand-secondary; 
-	color: $color-brand-principal;
-}
+	body {
+		background-color: $color-brand-secondary; 
+		color: $color-brand-principal;
+	}
 
-.primaryPlaylist-title {
-	color: red;
-}
+	.primaryPlaylist-title {
+		color: red;
+	}
