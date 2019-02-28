@@ -241,15 +241,53 @@ body {
 
 
 .fadeIn {
+  /*parametros: duracion de animacion, nombre de animacion*/
   animation: 5000ms fadeIn;
 }
 
 @keyframes fadeIn {
+  /*Estado inicial*/
   0% {
     opacity: 0;
   }
-
+  /*Estado final*/
   100% {
     opacity: 1;
+  }
+}
+
+
+
+.recall-api-movielist {
+  position: relative;
+  margin: 0 0 0 20px;
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+  
+}
+
+.recall-api-movielist:before {
+  position: absolute;
+  content: '';
+  height: 100%; 
+  width: 100%; 
+  border: 2px dashed orange;
+  top: -5px;
+  left: -5px;
+  border-radius: inherit;
+  animation: spin 10s linear infinite;
+  
+}
+
+.recall-api-movielist:hover {
+  background-color: #B2FFFF;
+}
+
+@keyframes spin { 
+  100% { 
+    transform: rotateZ(360deg); 
   }
 }
