@@ -21,7 +21,7 @@ esta nos permite reusar declaraciones
 =========================*/
 /* line 4, basics-html/inputs/_buttons.scss */
 button {
-  background-color: red;
+  background-color: #1E90FF;
   color: #fee;
   padding: 5px 10px 5px 10px;
   font-size: 27px;
@@ -54,33 +54,53 @@ h1, h2, h3, h4 {
 
 /* line 1, layout/_layout.scss */
 header {
-  margin: 5px auto 5px auto;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 24px;
   text-align: center;
+  color: #1E90FF;
+  border-bottom: 5px solid #1E90FF;
 }
 
-/* line 6, layout/_layout.scss */
+/* line 10, layout/_layout.scss */
 section {
-  max-width: 1024px;
-  background-color: #999;
+  max-width: 824px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 24px;
-  margin: 10px auto 10px auto;
+  text-align: center;
+  background-color: #999;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* line 21, layout/_layout.scss */
+.max-width--huge {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 24px;
+  text-align: center;
+  background-color: #444;
 }
 
 /*EJECUCION DE CSS
 ===================================*/
 /* line 38, index.scss */
 h1, h2 {
-  color: red;
+  color: #1E90FF;
   font-family: helvetica;
+  text-shadow: 1px 2px 8px #bbb;
 }
 
-/* line 45, index.scss */
+/* line 46, index.scss */
 body {
   background-color: #eee;
-  color: red;
+  color: #fee;
 }
 
-/* line 50, index.scss */
+/* line 51, index.scss */
 .primaryPlaylist-title {
   color: red;
 }

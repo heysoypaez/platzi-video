@@ -1,13 +1,28 @@
 header {
-	margin: 5px auto 5px auto;
-	text-align: center;
+	@include use-max-width(1024px);
+	@include centered;
+
+	color: $color-brand-principal;
+
+	border-bottom: 5px solid $color-brand-principal;
 }
 
 section {	
-	@include max-width; //Asi llamamos el mixin
+
+	@include use-max-width; //Asi llamamos el mixin
+	@include centered;
+
 	background-color: $color-grey;
-	padding: $padding-base;
-	margin: 10px auto 10px auto;
+	margin-top: 10px ;
+	margin-bottom: 10px;
+	
+}
+
+.max-width--huge {
+	@include use-max-width(1024px);
+	@include centered;
+	background-color: $color-dark-grey;
+
 }
 
 
