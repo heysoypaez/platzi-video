@@ -13,16 +13,32 @@ $COLORS
 /*Textures*/
 /* tipography
 =============== =*/
+/*CONSTANTES*/
+/*Border*/
 /*Elementos bases HTML
 =========================*/
-/* line 1, basics-html/inputs/_buttons.scss */
+/* Buttons
+=========================*/
+/* line 4, basics-html/inputs/_buttons.scss */
 button {
   background-color: red;
   color: #fee;
-  padding: 10px;
-  font-size: 18px;
+  padding: 5px 10px 5px 10px;
+  font-size: 27px;
+  display: inline-block;
+  line-height: 2.5;
+  border-radius: 10px;
+}
+/* line 15, basics-html/inputs/_buttons.scss */
+button .btn__icon {
+  font-size: 27px;
+}
+/* line 19, basics-html/inputs/_buttons.scss */
+button .btn--warning {
+  background-color: yellow;
 }
 
+/*block, element, modifier*/
 /* line 1, basics-html/inputs/_form.scss */
 #form, input {
   background-color: #ffff00;

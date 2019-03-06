@@ -1,6 +1,28 @@
-button {
+/* Buttons
+=========================*/
+
+button  {
+
+	
 	background-color: $background-button-color;
 	color: $button-color;
-	padding: 10px;
-	font-size: $base-font-size;
+	padding: 5px 10px 5px 10px;
+	font-size: $button-font-size;
+	display: inline-block;
+	line-height: 2.5;
+	border-radius: $border-radius-base;
+
+	.btn__icon {
+		font-size: $button-font-size;
+	}
+
+	.btn--warning {
+		background-color: $color-info;
+	}
 }
+
+
+
+
+/*block, element, modifier*/
+
