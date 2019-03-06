@@ -1,0 +1,14 @@
+//Declaración de $Mixins
+//=======================*/
+
+@mixin max-width {
+	max-width: 1024px;
+}
+
+
+/*Un mixin es una funcion 
+
+esta nos permite reusar declaraciones
+ y arrojarle parametros
+
+ crea tu parcial de mixins*/

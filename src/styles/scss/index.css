@@ -1,7 +1,3 @@
-/*Importacion de archivos parciales scss
-========================================*/
-/*Librerias, Settings y variables
-=================================*/
 /*======================
 $COLORS
 =======================*/
@@ -15,8 +11,12 @@ $COLORS
 =============== =*/
 /*CONSTANTES*/
 /*Border*/
-/*Elementos bases HTML
-=========================*/
+/*Un mixin es una funcion 
+
+esta nos permite reusar declaraciones
+ y arrojarle parametros
+
+ crea tu parcial de mixins*/
 /* Buttons
 =========================*/
 /* line 4, basics-html/inputs/_buttons.scss */
@@ -52,26 +52,35 @@ h1, h2, h3, h4 {
   font-family: arial, sans-serif;
 }
 
-/*Elementos de interfaz
-=========================*/
-/*Utilities
-=============*/
-/*Siempre al final*/
+/* line 1, layout/_layout.scss */
+header {
+  margin: 5px auto 5px auto;
+  text-align: center;
+}
+
+/* line 6, layout/_layout.scss */
+section {
+  max-width: 1024px;
+  background-color: #999;
+  padding: 24px;
+  margin: 10px auto 10px auto;
+}
+
 /*EJECUCION DE CSS
 ===================================*/
-/* line 28, index.scss */
+/* line 38, index.scss */
 h1, h2 {
   color: red;
   font-family: helvetica;
 }
 
-/* line 35, index.scss */
+/* line 45, index.scss */
 body {
   background-color: #eee;
   color: red;
 }
 
-/* line 40, index.scss */
+/* line 50, index.scss */
 .primaryPlaylist-title {
   color: red;
 }

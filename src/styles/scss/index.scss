@@ -1,12 +1,16 @@
-/*Importacion de archivos parciales scss
-========================================*/
-	
-	/*Librerias, Settings y variables
-	=================================*/
-	@import "_variables.scss";
 
-	/*Elementos bases HTML
-	=========================*/
+//Importacion de archivos parciales scss
+//========================================
+	
+	//Librerias, Settings y variables
+	//===============================*/
+	@import "lib/_variables.scss";
+	@import "lib/_mixins.scss";
+
+
+
+	//Elementos bases HTML
+	//=========================*/
 	@import "basics-html/containers/_div.scss";
 	@import "basics-html/containers/_section.scss";
 
@@ -14,13 +18,19 @@
 	@import "basics-html/inputs/_form.scss";
 	@import "basics-html/text/_titles.scss";
 
-	/*Elementos de interfaz
-	=========================*/
+	//Elementos de interfaz
+	//=========================*/
 
-	/*Utilities
-	=============*/
+	//Layout
+	//=========*/
+
+	@import "layout/_layout.scss";
+
+	//Utilities
+	//=============*/
+	
 	@import "utilities/_utilities.scss";
-	/*Siempre al final*/
+	//Siempre al final
 
 
 /*EJECUCION DE CSS
