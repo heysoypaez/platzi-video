@@ -1,13 +1,12 @@
-/*======================
-$COLORS
-=======================*/
+//$COLORS
+//=======================*/
 
 
-/*Branding resources
-======================*/
+//Branding resources
+//======================*/
 
-/*Branding color
-===============*/
+//Branding color
+//===============*/
 
 $color-brand-principal: #1E90FF; 
 $color-brand-secondary: #eee;
@@ -15,7 +14,7 @@ $color-brand-secondary: #eee;
 
 $font-brand-principal: helvetica;
 
-/*Degradez black - white*/
+// Degradez black - white*/
 
 $color-black: #111;
 $color-dark-grey: #444;
@@ -23,7 +22,7 @@ $color-grey: #999;
 $color-lightgrey: #eee;
 $color-white: #fee;
 
-/*Textures*/
+//Textures*/
 
 $color-alert: rgb(252,228,287);
 $color-error: red;
@@ -32,19 +31,20 @@ $color-sucess: green;
 
 
 
-/* tipography
-=============== =*/
+// tipography
+//=============== =*/
 
 $baseFont:  "Quicksand", sans-serif;
 $base-font-size: 18px;
+$font-size-base: $base-font-size ;
 $button-font-size: $base-font-size * 1.5;
 
 $button-color: $color-white;
 $background-button-color: $color-brand-principal;
 
 
-/*CONSTANTES*/
-/*Border*/
+//CONSTANTES*/
+//Border*/
 
 $border-radius-base: 10px;
 $padding-base: 24px;

@@ -1,7 +1,7 @@
 /* Buttons
 =========================*/
 
-button  {
+ %btn {
 
 	
 	background-color: $background-button-color;
@@ -12,14 +12,30 @@ button  {
 	line-height: 2.5;
 	border-radius: $border-radius-base;
 
+}
+
+.btn , button {
+
+	@extend %btn;
+
+}
+
 	.btn__icon {
+		@extend %btn;
 		font-size: $button-font-size;
 	}
 
 	.btn--warning {
+		@extend %btn;
 		background-color: $color-info;
 	}
-}
+
+	.btn--info {
+		@extend .btn;
+		color: $color-info;
+
+	}
+
 
 
 

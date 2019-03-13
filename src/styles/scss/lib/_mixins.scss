@@ -13,6 +13,14 @@
 	text-align: center;
 }
 
+@mixin respond-to($width) {
+
+	@media only screen and (min-width: $width) {
+		@content; //contenido css como parametro
+	}
+}
+
+
 /*Un mixin es una funcion 
 
 esta nos permite reusar declaraciones

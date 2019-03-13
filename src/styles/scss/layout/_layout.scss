@@ -9,8 +9,12 @@ header {
 
 section {	
 
+	
 	@include use-max-width; //Asi llamamos el mixin
 	@include centered;
+	@include respond-to(800px) {
+		font-size: $font-size-base + 5px;
+	}
 
 	background-color: $color-grey;
 	margin-top: 10px ;

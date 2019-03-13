@@ -1,16 +1,3 @@
-/*======================
-$COLORS
-=======================*/
-/*Branding resources
-======================*/
-/*Branding color
-===============*/
-/*Degradez black - white*/
-/*Textures*/
-/* tipography
-=============== =*/
-/*CONSTANTES*/
-/*Border*/
 /*Un mixin es una funcion 
 
 esta nos permite reusar declaraciones
@@ -20,7 +7,7 @@ esta nos permite reusar declaraciones
 /* Buttons
 =========================*/
 /* line 4, basics-html/inputs/_buttons.scss */
-button {
+.btn, .btn--info, button, .btn__icon, .btn--warning {
   background-color: #1E90FF;
   color: #fee;
   padding: 5px 10px 5px 10px;
@@ -29,13 +16,20 @@ button {
   line-height: 2.5;
   border-radius: 10px;
 }
-/* line 15, basics-html/inputs/_buttons.scss */
-button .btn__icon {
+
+/* line 23, basics-html/inputs/_buttons.scss */
+.btn__icon {
   font-size: 27px;
 }
-/* line 19, basics-html/inputs/_buttons.scss */
-button .btn--warning {
+
+/* line 28, basics-html/inputs/_buttons.scss */
+.btn--warning {
   background-color: yellow;
+}
+
+/* line 33, basics-html/inputs/_buttons.scss */
+.btn--info {
+  color: yellow;
 }
 
 /*block, element, modifier*/
@@ -74,8 +68,14 @@ section {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+@media only screen and (min-width: 800px) {
+  /* line 10, layout/_layout.scss */
+  section {
+    font-size: 23px;
+  }
+}
 
-/* line 21, layout/_layout.scss */
+/* line 25, layout/_layout.scss */
 .max-width--huge {
   max-width: 1024px;
   margin-left: auto;
