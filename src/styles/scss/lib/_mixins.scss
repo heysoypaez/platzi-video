@@ -20,6 +20,30 @@
 	}
 }
 
+@mixin z-index-organized($props) {
+
+	//CSS content
+
+	/*What do i want?
+			
+			1. Organize my elements by z index
+
+			crear lista con z index
+			crear funcion para manejarlos
+
+			Un Z Index no se puede repetir a menos que queremos que este a la misma altura
+
+			Funcion para mandar al fondo
+			Funcion para mandar al principio
+			Funcion para mandar a un lugar especifico
+			Funcion para mandarlo al medio
+			Funcion para colocarlo en frente de un elemento concreto
+			Funcion para colocarlo detras de un elemento concreto
+		
+
+	*/
+}
+
 
 /*Un mixin es una funcion 
 
